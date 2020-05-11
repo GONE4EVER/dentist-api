@@ -2,13 +2,21 @@ import Person from 'entities/Person';
 
 
 export default class Patient extends Person {
-  address
+  constructor(props) {
+    super(props);
 
-  phoneNumber
+    const {
+      address,
+      email,
+      company,
+      job,
+      notes,
+    } = props;
 
-  email
-
-  company
-
-  job
+    this.address = address;
+    this.email = email;
+    this.company = company;
+    this.job = job;
+    this.notes = notes;
+  }
 }

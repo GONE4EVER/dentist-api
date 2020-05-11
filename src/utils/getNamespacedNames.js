@@ -4,9 +4,9 @@ export default (modulePrefix) => (sourceObject) => Object
   .entries(sourceObject)
   .reduce(
     (result, [ propName, propValue ]) => {
-      const newPropName = `${modulePrefix}/${propName}`;
+      const newPropValue = `${modulePrefix}/${propValue}`;
 
-      result[newPropName] = propValue;
+      result[propName] = newPropValue;
       return result;
     },
     {},
