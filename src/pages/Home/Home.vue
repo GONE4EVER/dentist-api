@@ -21,6 +21,10 @@ export default {
   data: () => ({
     navBar: null,
   }),
+  beforeRouteUpdate(to, from, next) {
+    this.navBar = null;
+    next();
+  },
   methods: {
     toggleNavBar() {
       this.navBar = !this.navBar;
