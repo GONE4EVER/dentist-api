@@ -9,8 +9,12 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 import AppHeader from 'features/Navigation/components/AppHeader.vue';
 import NavigationBar from 'features/Navigation/components/NavigationBar.vue';
+
+import { actions } from 'features/Patients/constants/store';
 
 
 export default {
@@ -26,9 +30,15 @@ export default {
     next();
   },
   methods: {
+    ...mapActions({
+      fetchPatients: actions.GET_PATIENTS,
+    }),
     toggleNavBar() {
       this.navBar = !this.navBar;
     },
+  },
+  created() {
+    this.fetchPatients();
   },
 };
 </script>
