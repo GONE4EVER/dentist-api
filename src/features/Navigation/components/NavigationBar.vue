@@ -51,7 +51,7 @@ export default {
   mounted() {
     const { name } = this.$route;
 
-    if (name === homeRouteName) { // TODO: replace with constant
+    if (name === homeRouteName) {
       this.$router.push({ name: this.active });
     }
   },

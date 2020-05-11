@@ -17,7 +17,8 @@
 </template>
 
 <script>
-import RecordsTable from 'features/Patients/components/RecordsTable.vue';
+import RecordsTable from 'features/Records/components/RecordsTable.vue';
+
 
 export default {
   components: {

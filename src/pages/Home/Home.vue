@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <navigation-bar v-model="navBar"/>
-
     <app-header :handleMenuClick="toggleNavBar" />
     <v-content>
       <router-view />
