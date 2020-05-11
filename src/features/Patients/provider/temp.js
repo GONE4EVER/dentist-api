@@ -1,5 +1,6 @@
 export default [
   {
+    id: 123,
     firstName: 'Corey',
     lastName: 'Taylor',
     address: 'Wall st.',
@@ -10,6 +11,7 @@ export default [
     notes: '123',
   },
   {
+    id: 321,
     firstName: 'Roy',
     lastName: 'Jones',
     address: 'Bollywood',

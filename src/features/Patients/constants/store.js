@@ -17,6 +17,7 @@ const getters = getNamespacedItems({
 const mutations = {
   ADD_ITEM: 'ADD_ITEM',
   SET_ITEMS_LIST: 'SET_ITEMS_LIST',
+  EDIT_ITEM: 'EDIT_ITEM',
   REMOVE_ITEM: 'REMOVE_ITEM',
 
   SET_FETCH_STATUS: 'SET_FETCH_STATUS',

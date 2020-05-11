@@ -34,6 +34,11 @@ export const ADD_PATIENT = (context, payload) => {
   context.commit(mutations.ADD_ITEM, payload);
 };
 
+export const EDIT_PATIENT_PROFILE = (context, payload) => {
+  // fetch with PatientsProvider
+  context.commit(mutations.EDIT_ITEM, payload);
+};
+
 export const REMOVE_PATIENT = (context, payload) => {
   // fetch
   context.commit(mutations.REMOVE_ITEM, payload);
