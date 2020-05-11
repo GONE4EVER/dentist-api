@@ -3,6 +3,7 @@ import Patient from 'entities/Patient.entity';
 
 import data from './temp';
 
+
 export default {
   all() {
     return new Promise((resolve/* , reject */) => {
