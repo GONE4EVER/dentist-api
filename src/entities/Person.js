@@ -1,6 +1,14 @@
 class Person {
-  constructor({ firstName, lastName, phoneNumber }) {
+  constructor(props) {
+    const {
+      firstName,
+      id,
+      lastName,
+      phoneNumber,
+    } = props;
+
     this.firstName = firstName;
+    this.id = id;
     this.lastName = lastName;
     this.phoneNumber = phoneNumber;
   }

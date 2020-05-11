@@ -4,19 +4,27 @@
       {{ title }}
       <v-spacer v-if="Boolean(title)"></v-spacer>
       <v-text-field
-        v-model="search"
         v-if="searchable"
+        :value="search"
+        @input="onSearchUpdate"
         append-icon="mdi-magnify"
+        clearable
         label="Search"
-        single-line
-        hide-details
+        outlined
       ></v-text-field>
     </v-card-title>
     <v-data-table
       :headers="headers"
       :items="dataSource"
+      :loading="loading"
       :search="search"
-    ></v-data-table>
+    >
+      <template #item.notes="{item}">
+        <slot name="notes" :item="item">
+          {{ item.notes }}
+        </slot>
+      </template>
+    </v-data-table>
   </v-card>
 </template>
 
@@ -31,18 +39,28 @@ export default {
       type: Array,
       required: true,
     },
+    search: {
+      type: String,
+      default: '',
+    },
     searchable: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     headers: {
       type: Array,
       required: true,
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
   },
-  data: () => ({
-    search: '',
-  }),
+  methods: {
+    onSearchUpdate(value) {
+      this.$emit('update:search', value);
+    },
+  },
 };
 </script>
 
