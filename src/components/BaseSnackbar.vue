@@ -13,8 +13,9 @@
       dark
       text
       @click="close"
+      v-bind="$attrs"
     >
-      Close
+      {{ buttonText }}
     </v-btn>
   </v-snackbar>
 </template>
@@ -24,6 +25,7 @@ const X_AXIS = [ 'right', 'left' ];
 const Y_AXIS = [ 'top', 'bottom' ];
 
 const DEFAULT_TIMEOUT = 3000;
+const BUTTON_DEFAULT_TEXT = 'Close';
 
 
 export default {
@@ -39,6 +41,10 @@ export default {
       validator(value) {
         return Y_AXIS.includes(value);
       },
+    },
+    buttonText: {
+      type: String,
+      default: BUTTON_DEFAULT_TEXT,
     },
     color: {
       type: String,
@@ -56,9 +62,14 @@ export default {
       type: String,
       required: true,
     },
+    beforeClose: {
+      type: Function,
+      default: null,
+    },
   },
   methods: {
     close() {
+      this.$emit('beforeClose');
       this.$emit('update:visible', false);
     },
   },
