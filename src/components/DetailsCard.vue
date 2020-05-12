@@ -1,25 +1,25 @@
 <template>
   <v-card>
     <v-card-title v-if="Boolean(title)" class="headline">
-      {{title}}
+      {{ `${firstName} ${lastName}'s details` }}
     </v-card-title>
     <v-card-text>
-      {{ (!editMode && notes) || null }}
+      {{ (!editMode || null) && (notes || cardTextPlaceholder) }}
       <v-textarea
         v-if="editMode"
         v-model="newNoteContent"
-        :error-messages="errorMessages"
-        name="notes"
-        placeholder="Type to edit..."
+        :error-messages="errorMessage"
+        :placeholder="editAreaPlaceholder"
+        autofocus
       >
-        <template v-if="Boolean(errorMessages.length)" #message={message}>
+        <template v-if="Boolean(errorMessage)" #message={message}>
           {{ `${message}` }}
         </template>
       </v-textarea>
     </v-card-text>
     <v-card-actions>
       <v-btn
-        v-if="Boolean(errorMessages.length)"
+        v-if="Boolean(errorMessage)"
         @click="callCollapse(true)"
         color="red"
         text
@@ -36,8 +36,11 @@
 </template>
 
 <script>
-
+const CARD_TEXT_PLACEHOLDER = 'No notes yet.';
+const CARD_EDIT_AREA_PLACEHOLDER = 'Type to edit...';
 const ERROR_MESSAGE = 'Your changes will be lost.';
+
+const VISIBILITY_STATE = 'isOpened';
 
 export default {
   props: {
@@ -49,7 +52,15 @@ export default {
       type: String,
       required: true,
     },
-    isOpened: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    [VISIBILITY_STATE]: {
       type: Boolean,
       required: true,
     },
@@ -58,7 +69,9 @@ export default {
     return {
       editMode: false,
       newNoteContent: null,
-      errorMessages: [],
+      errorMessage: null,
+      cardTextPlaceholder: CARD_TEXT_PLACEHOLDER,
+      editAreaPlaceholder: CARD_EDIT_AREA_PLACEHOLDER,
     };
   },
   methods: {
@@ -66,29 +79,29 @@ export default {
       const { editMode, newNoteContent } = this;
 
       if (editMode) {
-        this.errorMessages = [];
+        this.errorMessage = null;
         this.$emit('updateContent', newNoteContent);
       }
       this.editMode = !editMode;
     },
     callCollapse(force) {
       if (!force && this.newNoteContent !== this.notes) {
-        this.errorMessages = [ ERROR_MESSAGE ];
+        this.errorMessage = ERROR_MESSAGE;
         return;
       }
 
       this.editMode = false;
-      this.$emit('update:isOpened', false);
+      this.$emit(`update:${VISIBILITY_STATE}`, false);
     },
   },
   watch: {
-    isOpened: {
+    [VISIBILITY_STATE]: {
       immediate: true,
       handler(open) {
         if (open) {
           this.newNoteContent = this.notes;
         } else {
-          this.errorMessages = [];
+          this.errorMessage = null;
         }
       },
     },

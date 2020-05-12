@@ -19,7 +19,7 @@
       </template>
       <details-card
         title="Console log"
-        v-bind.sync="selectedPatient"
+        v-bind="selectedPatient"
         :isOpened.sync="dialogOpened"
         @updateContent="handleNotesUpdate"
       />
