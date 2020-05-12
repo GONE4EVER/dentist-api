@@ -1,9 +1,8 @@
 <template>
   <v-dialog
     v-bind="$attrs"
+    persistent
     width="800px"
-    @keydown.esc="close"
-    @click:outside="close"
   >
     <v-card>
       <v-card-title class="blue darken-2 white--text">

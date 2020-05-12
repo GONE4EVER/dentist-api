@@ -12,16 +12,18 @@
     >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
-    <base-dialog v-model="dialogOpened"/>
+    <NewPatientCard v-model="dialogOpened"/>
   </v-card>
 </template>
 
 <script>
+import NewPatientCard from 'features/Patients/components/NewPatientCard.vue';
 import PatientsTable from 'features/Patients/components/PatientsTable.vue';
 
 
 export default {
   components: {
+    NewPatientCard,
     PatientsTable,
   },
   data: () => ({
