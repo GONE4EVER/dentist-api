@@ -1,5 +1,14 @@
 <template>
   <v-card>
+    <v-overlay :value="fetching" absolute opacity="0.8">
+      <v-progress-circular
+        indeterminate
+        rotate
+        size="64"
+        width="5"
+        color="light-blue"
+      />
+    </v-overlay>
     <v-card-title v-if="Boolean(title)" class="headline">
       {{ `${firstName} ${lastName}'s details` }}
     </v-card-title>
@@ -36,11 +45,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
+import { getters } from 'features/Patients/constants/store';
+
+
 const CARD_TEXT_PLACEHOLDER = 'No notes yet.';
 const CARD_EDIT_AREA_PLACEHOLDER = 'Type to edit...';
 const ERROR_MESSAGE = 'Your changes will be lost.';
 
 const VISIBILITY_STATE = 'isOpened';
+
 
 export default {
   props: {
@@ -93,6 +108,11 @@ export default {
       this.editMode = false;
       this.$emit(`update:${VISIBILITY_STATE}`, false);
     },
+  },
+  computed: {
+    ...mapGetters({
+      fetching: getters.GET_FETCHING_STATE,
+    }),
   },
   watch: {
     [VISIBILITY_STATE]: {

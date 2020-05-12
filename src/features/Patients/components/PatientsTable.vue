@@ -104,8 +104,7 @@ export default {
     },
     handleNotesUpdate(newValue) {
       this.editSelectedProfile({
-        targetProp: 'notes',
-        value: newValue,
+        notes: newValue,
         id: this.selectedPatientId,
       });
     },
