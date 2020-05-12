@@ -3,17 +3,32 @@ import Patient from 'entities/Patient.entity';
 
 import data from './temp';
 
+const emitCall = (callback, shouldFail = false, delay = 1000) => new Promise((resolve, reject) => {
+  setTimeout(() => {
+    if (shouldFail) {
+      reject(callback());
+    } else {
+      resolve(callback());
+    }
+  }, delay);
+});
+
 
 export default {
-  all() {
-    return new Promise((resolve/* , reject */) => {
-      setTimeout(() => {
-        const formattedData = data.map(
-          (dataItem) => new Patient(dataItem),
-        );
+  getAll: async () => emitCall(
+    () => data.map((dataItem) => new Patient(dataItem)),
+  ),
+  create: async () => {
 
-        resolve(formattedData);
-      }, 2000);
-    });
   },
+  update: async (payload) => emitCall(
+    () => {
+      const originalItem = data.find(({ id }) => id === payload.id);
+
+      return originalItem
+        ? new Patient({ ...originalItem, ...payload })
+        : null;
+    },
+  )
+  ,
 };

@@ -1,28 +1,16 @@
 import setNamespace from 'utils/getNamespacedNames';
 
 import baseActions from 'features/Patients/constants/actions';
+import baseGetters from 'features/Patients/constants/getters';
+import baseMutations from 'features/Patients/constants/mutations';
 
 
 const PATIENTS_MODULE_PREFIX = 'patients';
 const getNamespacedItems = setNamespace(PATIENTS_MODULE_PREFIX);
 
 const actions = getNamespacedItems(baseActions);
-
-const getters = getNamespacedItems({
-  GET_LIST: 'GET_LIST',
-  GET_ONE: 'GET_ONE',
-  GET_FETCHING_STATE: 'GET_FETCHING_STATE',
-});
-
-const mutations = {
-  ADD_ITEM: 'ADD_ITEM',
-  SET_ITEMS_LIST: 'SET_ITEMS_LIST',
-  EDIT_ITEM: 'EDIT_ITEM',
-  REMOVE_ITEM: 'REMOVE_ITEM',
-
-  SET_FETCH_STATUS: 'SET_FETCH_STATUS',
-  SET_ERROR_STATE: 'SET_ERROR_STATE',
-};
+const getters = getNamespacedItems(baseGetters);
+const mutations = baseMutations;
 
 
 export {

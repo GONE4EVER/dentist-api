@@ -1,0 +1,5 @@
+export default {
+  GET_LIST: 'GET_LIST',
+  GET_ONE: 'GET_ONE',
+  GET_FETCHING_STATE: 'GET_FETCHING_STATE',
+};
