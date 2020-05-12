@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    v-bind="$attrs"
+    :value="isOpened"
     persistent
     width="800px"
   >
@@ -118,10 +118,9 @@
           </v-form>
         </v-card-text>
 
-
         <v-card-actions>
           <v-btn
-            @click="reset"
+            @click="cancel"
             color="error"
             text
           >
@@ -147,28 +146,46 @@
         </v-card-actions>
       </v-container>
     </v-card>
+
+    <base-snackbar
+      @beforeClose="close"
+      :visible="Boolean(error)"
+      :text="error || 'null'"
+      buttonText="Close anyway"
+      color="error"
+    />
+
   </v-dialog>
 </template>
 
 <script>
-// import { mapGetters, mapActions } from 'vuex';
+import { /* mapGetters, */ mapActions } from 'vuex';
+
+import { actions } from 'features/Patients/constants/store';
 
 
+const FORM_IS_NOT_EMPTY_ERROR = 'Form is not empty';
 const PHONE_PREFIX = '+375';
 
 const notEmpty = (errorText) => (v) => !!v || errorText;
 const baseConfig = {
-  value: '',
+  value: null,
   rules: [ notEmpty('Required') ],
 };
 
-
 export default {
+  props: {
+    isOpened: {
+      type: Boolean,
+      required: true,
+    },
+  },
   data: () => ({
+    error: '',
     valid: true,
     name: {
-      firstName: '',
-      lastName: '',
+      firstName: null,
+      lastName: null,
       rules: [
         notEmpty('Required'),
         (v) => (v && v.length <= 12) || 'Must be equal or less than 12 characters',
@@ -179,7 +196,7 @@ export default {
     company: { ...baseConfig },
     phone: {
       prefix: PHONE_PREFIX,
-      value: '',
+      value: null,
       rules: [
         notEmpty('Phone number required'),
         (v) => v !== PHONE_PREFIX,
@@ -187,15 +204,23 @@ export default {
       ],
     },
     email: {
-      value: '',
+      value: null,
       rules: [
         notEmpty('Required'),
         (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
       ],
     },
     notes: {
-      value: '',
-      rules: [ (v) => v.length <= 256 || 'Too many symbols' ],
+      value: null,
+      rules: [
+        (v) => {
+          if (!v) {
+            return true;
+          }
+
+          return v.length <= 256 || 'Too many symbols';
+        },
+      ],
     },
     checkbox: false,
   }),
@@ -203,21 +228,28 @@ export default {
     phoneNumber() {
       const { prefix, value } = this.phone;
 
-      return `${prefix}${value}`;
+      return value
+        ? `${prefix}${value}`
+        : value;
     },
   },
   methods: {
+    ...mapActions({
+      addPatient: actions.ADD_PATIENT,
+    }),
     validate() {
       this.$refs.form.validate();
     },
     reset() {
+      this.error = '';
       this.$refs.form.reset();
     },
-    resetValidation() {
-      this.$refs.form.resetValidation();
+    close() {
+      this.reset();
+      this.$emit('update:isOpened', false);
     },
-    submit() {
-      const formData = {
+    getFormData() {
+      return {
         address: this.address.value,
         company: this.company.value,
         email: this.email.value,
@@ -227,8 +259,28 @@ export default {
         notes: this.notes.value,
         phoneNumber: this.phoneNumber,
       };
+    },
+    checkIfEmpty() {
+      const isEmpty = Object
+        .values(this.getFormData())
+        .every((v) => !v);
 
-      console.log(formData);
+      return isEmpty;
+    },
+    cancel() {
+      const isEmpty = this.checkIfEmpty();
+
+      if (isEmpty) {
+        this.close();
+      } else {
+        this.error = FORM_IS_NOT_EMPTY_ERROR;
+      }
+    },
+    submit() {
+      const formData = this.getFormData();
+
+      this.addPatient(formData);
+      this.close();
     },
   },
 };

@@ -2,17 +2,17 @@
   <v-card>
     <patients-table />
     <v-btn
+      @click="dialogOpened = !dialogOpened"
       bottom
       color="pink"
       dark
       fab
       fixed
       right
-      @click="dialogOpened = !dialogOpened"
     >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
-    <NewPatientCard v-model="dialogOpened"/>
+    <new-patient-card :isOpened.sync="dialogOpened"/>
   </v-card>
 </template>
 
