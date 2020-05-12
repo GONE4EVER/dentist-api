@@ -54,8 +54,6 @@ const CARD_TEXT_PLACEHOLDER = 'No notes yet.';
 const CARD_EDIT_AREA_PLACEHOLDER = 'Type to edit...';
 const ERROR_MESSAGE = 'Your changes will be lost.';
 
-const VISIBILITY_STATE = 'isOpened';
-
 
 export default {
   props: {
@@ -75,7 +73,7 @@ export default {
       type: String,
       required: true,
     },
-    [VISIBILITY_STATE]: {
+    isOpened: {
       type: Boolean,
       required: true,
     },
@@ -91,13 +89,19 @@ export default {
   },
   methods: {
     switchEditMode() {
-      const { editMode, newNoteContent } = this;
+      const { editMode, newNoteContent, notes } = this;
 
       if (editMode) {
         this.errorMessage = null;
-        this.$emit('updateContent', newNoteContent);
+
+        if (newNoteContent !== notes) {
+          this.$emit('updateContent', newNoteContent);
+        } else {
+          this.editMode = !editMode;
+        }
+      } else {
+        this.editMode = !editMode;
       }
-      this.editMode = !editMode;
     },
     callCollapse(force) {
       if (!force && this.newNoteContent !== this.notes) {
@@ -106,16 +110,17 @@ export default {
       }
 
       this.editMode = false;
-      this.$emit(`update:${VISIBILITY_STATE}`, false);
+      this.$emit('update:isOpened', false);
     },
   },
   computed: {
     ...mapGetters({
       fetching: getters.GET_FETCHING_STATE,
+      errorState: getters.GET_ERROR_STATE,
     }),
   },
   watch: {
-    [VISIBILITY_STATE]: {
+    isOpened: {
       immediate: true,
       handler(open) {
         if (open) {
@@ -124,6 +129,13 @@ export default {
           this.errorMessage = null;
         }
       },
+    },
+    fetching(fetchingState) {
+      const { editMode, errorState } = this;
+
+      if (editMode && !fetchingState && !errorState) {
+        this.editMode = false;
+      }
     },
   },
 };
