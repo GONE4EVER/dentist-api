@@ -31,9 +31,17 @@ export const GET_PATIENTS = async ({ commit, dispatch }) => {
   }
 };
 
-export const ADD_PATIENT = (context, payload) => {
-  // fetch with PatientsProvider
-  context.commit(mutations.ADD_ITEM, payload);
+export const ADD_PATIENT = async ({ commit, dispatch }, payload) => {
+  try {
+    // fetch with PatientsProvider
+    const data = await PatientsProvider.create(payload);
+
+    commit(mutations.ADD_ITEM, data);
+  } catch (err) {
+    dispatch(baseActions.HANDLE_ERROR, err);
+  } finally {
+    dispatch(baseActions.FINISH_FETCH);
+  }
 };
 
 export const EDIT_PATIENT_PROFILE = async ({ commit, dispatch }, payload) => {

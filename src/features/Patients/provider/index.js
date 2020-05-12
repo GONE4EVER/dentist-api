@@ -19,9 +19,9 @@ export default {
   getAll: async () => emitCall(
     () => data.map((dataItem) => new Patient(dataItem)),
   ),
-  create: async () => {
-
-  },
+  create: async (payload) => emitCall(
+    () => new Patient(payload),
+  ),
   update: async (payload) => emitCall(
     () => {
       const originalItem = data.find(({ id }) => id === payload.id);

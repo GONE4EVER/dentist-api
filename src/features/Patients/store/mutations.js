@@ -12,7 +12,10 @@ export const SET_ITEMS_LIST = (state, payload) => {
 };
 
 export const ADD_ITEM = (state, payload) => {
-  console.log(state, payload);
+  state.list = [
+    payload,
+    ...state.list,
+  ];
 };
 
 export const EDIT_ITEM = (state, payload) => {
