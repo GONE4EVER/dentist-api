@@ -42,8 +42,10 @@ export const EDIT_PATIENT_PROFILE = async ({ commit, dispatch }, payload) => {
   try {
     // fetch with PatientsProvider
     const data = await PatientsProvider.update(payload);
+
     if (!data) {
-      throw new Error('Item does not exist no more'); // TODO: error handling; custom errors
+      // TODO: error handling; custom errors
+      throw new Error('Item does not exist no more');
     }
 
     commit(mutations.EDIT_ITEM, data);

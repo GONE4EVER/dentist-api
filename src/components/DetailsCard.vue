@@ -9,9 +9,11 @@
         color="light-blue"
       />
     </v-overlay>
+
     <v-card-title v-if="Boolean(title)" class="headline">
       {{ `${firstName} ${lastName}'s details` }}
     </v-card-title>
+
     <v-card-text>
       {{ (!editMode || null) && (notes || cardTextPlaceholder) }}
       <v-textarea
@@ -26,6 +28,7 @@
         </template>
       </v-textarea>
     </v-card-text>
+
     <v-card-actions>
       <v-btn
         v-if="Boolean(errorMessage)"
@@ -35,11 +38,16 @@
       >
         Discard
       </v-btn>
+
       <v-spacer />
+
       <v-btn color="green darken-1" text @click="switchEditMode">
         {{editMode ? 'Submit' : 'Edit'}}
       </v-btn>
-      <v-btn color="green darken-1" text @click="callCollapse(false)">Close</v-btn>
+
+      <v-btn color="green darken-1" text @click="callCollapse(false)">
+        Close
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>

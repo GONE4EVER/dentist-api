@@ -31,6 +31,5 @@ export default {
         : null;
     },
     // 'Loading error occured',
-  )
-  ,
+  ),
 };
