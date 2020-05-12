@@ -3,10 +3,11 @@ import Patient from 'entities/Patient.entity';
 
 import data from './temp';
 
-const emitCall = (callback, shouldFail = false, delay = 1000) => new Promise((resolve, reject) => {
+const emitCall = (callback, errorMessage = '', delay = 1000) => new Promise((resolve, reject) => {
   setTimeout(() => {
-    if (shouldFail) {
-      reject(callback());
+    if (errorMessage) {
+      // TODO: error handling; custom errors
+      reject(new Error(errorMessage));
     } else {
       resolve(callback());
     }
@@ -29,6 +30,7 @@ export default {
         ? new Patient({ ...originalItem, ...payload })
         : null;
     },
+    // 'Loading error occured',
   )
   ,
 };
