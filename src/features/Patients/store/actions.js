@@ -5,6 +5,7 @@ import { mutations } from 'features/Patients/constants/store';
 
 
 export const START_FETCH = ({ commit }) => {
+  commit(mutations.SET_ERROR_STATE, null);
   commit(mutations.SET_FETCH_STATUS, true);
 };
 
@@ -24,7 +25,7 @@ export const GET_PATIENTS = async ({ commit, dispatch }) => {
     commit(mutations.SET_ITEMS_LIST, data);
     commit(mutations.SET_ERROR_STATE, null);
   } catch (err) {
-    commit(mutations.SET_ERROR_STATE, err); // TODO: exceptions
+    dispatch(baseActions.HANDLE_ERROR, err); // TODO: exceptions
   } finally {
     dispatch(baseActions.FINISH_FETCH);
   }
@@ -42,7 +43,7 @@ export const EDIT_PATIENT_PROFILE = async ({ commit, dispatch }, payload) => {
     // fetch with PatientsProvider
     const data = await PatientsProvider.update(payload);
     if (!data) {
-      throw new Error('Not found'); // TODO: error handling; custom errors
+      throw new Error('Item does not exist no more'); // TODO: error handling; custom errors
     }
 
     commit(mutations.EDIT_ITEM, data);
@@ -58,6 +59,6 @@ export const HANDLE_ERROR = (context, errorPayload) => {
 };
 
 export const REMOVE_PATIENT = (context, payload) => {
-  // fetch
+  // fetch with PatientsProvider
   context.commit(mutations.REMOVE_ITEM, payload);
 };
