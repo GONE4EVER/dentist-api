@@ -123,8 +123,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      fetching: getters.GET_FETCHING_STATE,
       errorState: getters.GET_ERROR_STATE,
+      fetching: getters.GET_FETCHING_STATE,
     }),
   },
   watch: {

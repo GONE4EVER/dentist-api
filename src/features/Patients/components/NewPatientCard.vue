@@ -5,6 +5,16 @@
     width="800px"
   >
     <v-card>
+      <v-overlay :value="fetching" absolute opacity="0.8">
+        <v-progress-circular
+          indeterminate
+          rotate
+          size="64"
+          width="5"
+          color="light-blue"
+        />
+      </v-overlay>
+
       <v-card-title class="blue darken-2 white--text">
         Add new patient card
       </v-card-title>
@@ -159,9 +169,9 @@
 </template>
 
 <script>
-import { /* mapGetters, */ mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
-import { actions } from 'features/Patients/constants/store';
+import { actions, getters } from 'features/Patients/constants/store';
 
 
 const FORM_IS_NOT_EMPTY_ERROR = 'Form is not empty';
@@ -232,6 +242,10 @@ export default {
         ? `${prefix}${value}`
         : value;
     },
+    ...mapGetters({
+      errorState: getters.GET_ERROR_STATE,
+      fetching: getters.GET_FETCHING_STATE,
+    }),
   },
   methods: {
     ...mapActions({
@@ -280,7 +294,15 @@ export default {
       const formData = this.getFormData();
 
       this.addPatient(formData);
-      this.close();
+    },
+  },
+  watch: {
+    fetching(fetchingState) {
+      const { checkIfEmpty, close, errorState } = this;
+
+      if (!fetchingState && !errorState && !checkIfEmpty()) {
+        close();
+      }
     },
   },
 };

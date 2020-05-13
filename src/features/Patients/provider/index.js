@@ -15,12 +15,15 @@ const emitCall = (callback, errorMessage = '', delay = 1000) => new Promise((res
 });
 
 
+// TODO: error handling
 export default {
   getAll: async () => emitCall(
     () => data.map((dataItem) => new Patient(dataItem)),
+    // 'Data loading error',
   ),
   create: async (payload) => emitCall(
     () => new Patient(payload),
+    // 'Data loading error',
   ),
   update: async (payload) => emitCall(
     () => {

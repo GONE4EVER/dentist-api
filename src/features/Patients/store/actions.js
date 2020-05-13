@@ -15,9 +15,8 @@ export const FINISH_FETCH = ({ commit }) => {
 
 // TODO: api calls
 export const GET_PATIENTS = async ({ commit, dispatch }) => {
-  dispatch(baseActions.START_FETCH);
-
   try {
+    dispatch(baseActions.START_FETCH);
     // fetch with PatientsProvider
     // TODO: error handling
     const data = await PatientsProvider.getAll();
@@ -33,6 +32,7 @@ export const GET_PATIENTS = async ({ commit, dispatch }) => {
 
 export const ADD_PATIENT = async ({ commit, dispatch }, payload) => {
   try {
+    dispatch(baseActions.START_FETCH);
     // fetch with PatientsProvider
     const data = await PatientsProvider.create(payload);
 
@@ -45,10 +45,9 @@ export const ADD_PATIENT = async ({ commit, dispatch }, payload) => {
 };
 
 export const EDIT_PATIENT_PROFILE = async ({ commit, dispatch }, payload) => {
-  dispatch(baseActions.START_FETCH);
-
   try {
     // fetch with PatientsProvider
+    dispatch(baseActions.START_FETCH);
     const data = await PatientsProvider.update(payload);
 
     if (!data) {
