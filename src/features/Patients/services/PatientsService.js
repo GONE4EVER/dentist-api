@@ -1,32 +1,21 @@
-// import pipe from 'utils/pipe';
 import Patient from 'entities/Patient.entity';
 
-import data from './temp';
-
-
-const emitCall = (callback, errorMessage = '', delay = 1000) => new Promise((resolve, reject) => {
-  setTimeout(() => {
-    if (errorMessage) {
-      // TODO: error handling; custom errors
-      reject(new Error(errorMessage));
-    } else {
-      resolve(callback());
-    }
-  }, delay);
-});
+// temporary
+import emitFetch from 'temp/emitFetch';
+import data from 'temp/patients';
 
 
 // TODO: error handling
 export default {
-  getAll: async () => emitCall(
+  getAll: async () => emitFetch(
     () => data.map((dataItem) => new Patient(dataItem)),
     // 'Data loading error',
   ),
-  create: async (payload) => emitCall(
+  create: async (payload) => emitFetch(
     () => new Patient(payload),
     // 'Data loading error',
   ),
-  update: async (payload) => emitCall(
+  update: async (payload) => emitFetch(
     () => {
       const originalItem = data.find(({ id }) => id === payload.id);
 

@@ -16,7 +16,7 @@ class Person {
   get fullName() {
     const { firstName, lastName } = this;
 
-    return `${lastName} ${firstName}`;
+    return `${firstName} ${lastName}`;
   }
 }
 
