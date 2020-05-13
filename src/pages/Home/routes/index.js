@@ -5,19 +5,18 @@ import * as constants from 'pages/Home/routes/constants';
 
 
 const routes = {
-  icon: constants.ROOT_ICON,
   path: constants.ROOT_PATH,
   name: constants.ROOT_NAME,
   component: Home,
   children: [
     {
-      path: '/patients',
-      name: 'patientsList',
+      path: constants.PATIENTS_LIST_PATH,
+      name: constants.PATIENTS_LIST_NAME,
       component: Patients,
     },
     {
-      path: '/records',
-      name: 'recordsList',
+      path: constants.RECORDS_LIST_PATH,
+      name: constants.RECORDS_LIST_NAME,
       component: () => import('pages/Home/Records.vue'),
     },
   ],
