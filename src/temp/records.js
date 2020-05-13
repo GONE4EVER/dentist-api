@@ -1,3 +1,4 @@
+import doctors from 'temp/doctors';
 import patients from 'temp/patients';
 
 
@@ -9,30 +10,21 @@ export default [
   {
     date: baseDate1,
 
-    doctor: {
-      firstName: 'Den',
-      lastName: 'Braun',
-    },
+    doctor: doctors.find(({ id }) => id === 0),
     patient: patients.find(({ id }) => id === 123),
     notes: 'Corey Taylor\'s dentist',
   },
   {
     date: baseDate2,
 
-    doctor: {
-      firstName: 'Paul',
-      lastName: 'McCartney',
-    },
+    doctor: doctors.find(({ id }) => id === 1),
     patient: patients.find(({ id }) => id === 321),
     notes: 'Roy Jones\'s dentist',
   },
   {
     date: baseDate2,
 
-    doctor: {
-      firstName: 'Den',
-      lastName: 'Braun',
-    },
+    doctor: doctors.find(({ id }) => id === 2),
     patient: patients.find(({ id }) => id === 321),
     notes: 'Roy Jones\'s dentist',
   },
