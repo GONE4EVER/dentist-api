@@ -10,10 +10,11 @@
   >
     {{ text }}
     <v-btn
+      v-bind="$attrs"
+      v-if="buttonText"
+      @click="close"
       dark
       text
-      @click="close"
-      v-bind="$attrs"
     >
       {{ buttonText }}
     </v-btn>
@@ -25,7 +26,6 @@ const X_AXIS = [ 'right', 'left' ];
 const Y_AXIS = [ 'top', 'bottom' ];
 
 const DEFAULT_TIMEOUT = 3000;
-const BUTTON_DEFAULT_TEXT = 'Close';
 
 
 export default {
@@ -44,7 +44,7 @@ export default {
     },
     buttonText: {
       type: String,
-      default: BUTTON_DEFAULT_TEXT,
+      default: '',
     },
     color: {
       type: String,
