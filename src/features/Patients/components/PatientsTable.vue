@@ -24,7 +24,7 @@
         >
           <template v-if="editableProp" #[editableProp]={item}>
             <v-btn icon v-on="on" @click="setSelectedItem(item)">
-              <v-icon color="pink">mdi-note</v-icon>
+              <v-icon color="pink">mdi-note-text</v-icon>
             </v-btn>
           </template>
         </base-datatable>

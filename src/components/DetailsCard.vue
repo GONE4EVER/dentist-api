@@ -11,7 +11,7 @@
     </v-overlay>
 
     <v-card-title class="headline">
-      {{ `${title} details` }}
+      {{ title ? `${title} details` : 'Details' }}
     </v-card-title>
 
     <v-card-text>

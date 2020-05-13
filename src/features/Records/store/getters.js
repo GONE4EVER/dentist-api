@@ -6,10 +6,4 @@ export const GET_ERROR_STATE = (state) => state.error;
 
 export const GET_ONE = (state/* , getters */) => (searchedId) => state
   .list
-  .find(({ id }) => {
-    if (id === searchedId) {
-      console.log(state.list);
-    }
-
-    return id === searchedId;
-  });
+  .find(({ id }) => id === searchedId);

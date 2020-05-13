@@ -117,6 +117,7 @@
               :rules="notes.rules"
               auto-grow
               clearable
+              outlined
             />
 
             <v-checkbox
@@ -173,14 +174,22 @@ import { mapActions, mapGetters } from 'vuex';
 
 import { actions, getters } from 'features/Patients/constants/store';
 
-
-const FORM_IS_NOT_EMPTY_ERROR = 'Form is not empty';
 const PHONE_PREFIX = '+375';
+
+const ERROR_BASE_TEXT = 'Required';
+const FORM_IS_NOT_EMPTY_ERROR = 'Form is not empty';
+
+const EMAIL_INVALID = 'Invalid email';
+const NAME_INVALID = 'Must be equal or less than 12 characters';
+const NOTES_INVALID = 'Too many symbols';
+const PHONE_INVALID = 'Invalid Number';
+const PHONE_REQUIRED = 'Phone number required';
+
 
 const notEmpty = (errorText) => (v) => !!v || errorText;
 const baseConfig = {
   value: null,
-  rules: [ notEmpty('Required') ],
+  rules: [ notEmpty(ERROR_BASE_TEXT) ],
 };
 
 export default {
@@ -197,8 +206,8 @@ export default {
       firstName: null,
       lastName: null,
       rules: [
-        notEmpty('Required'),
-        (v) => (v && v.length <= 12) || 'Must be equal or less than 12 characters',
+        notEmpty(ERROR_BASE_TEXT),
+        (v) => (v && v.length <= 12) || NAME_INVALID,
       ],
     },
     address: { ...baseConfig },
@@ -208,16 +217,16 @@ export default {
       prefix: PHONE_PREFIX,
       value: null,
       rules: [
-        notEmpty('Phone number required'),
+        notEmpty(PHONE_REQUIRED),
         (v) => v !== PHONE_PREFIX,
-        (v) => /^(([0-9]){9})$/.test(v) || 'Invalid Number',
+        (v) => /^(([0-9]){9})$/.test(v) || PHONE_INVALID,
       ],
     },
     email: {
       value: null,
       rules: [
-        notEmpty('Required'),
-        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        notEmpty(ERROR_BASE_TEXT),
+        (v) => /.+@.+\..+/.test(v) || EMAIL_INVALID,
       ],
     },
     notes: {
@@ -228,7 +237,7 @@ export default {
             return true;
           }
 
-          return v.length <= 256 || 'Too many symbols';
+          return v.length <= 256 || NOTES_INVALID;
         },
       ],
     },
@@ -275,11 +284,9 @@ export default {
       };
     },
     checkIfEmpty() {
-      const isEmpty = Object
+      return Object
         .values(this.getFormData())
         .every((v) => !v);
-
-      return isEmpty;
     },
     cancel() {
       const isEmpty = this.checkIfEmpty();
