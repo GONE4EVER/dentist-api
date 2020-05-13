@@ -13,10 +13,11 @@ export default class Patient extends Person {
       notes,
     } = props;
 
+    this.id = Math.ceil(Math.random() * 1000000000); // TODO: remove
     this.address = address;
     this.email = email;
     this.company = company;
     this.job = job;
-    this.notes = notes;
+    this.notes = notes || '';
   }
 }
