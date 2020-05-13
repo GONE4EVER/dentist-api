@@ -10,8 +10,8 @@
       />
     </v-overlay>
 
-    <v-card-title v-if="Boolean(title)" class="headline">
-      {{ `${firstName} ${lastName}'s details` }}
+    <v-card-title class="headline">
+      {{ `${title} details` }}
     </v-card-title>
 
     <v-card-text>
@@ -70,14 +70,6 @@ export default {
       default: '',
     },
     notes: {
-      type: String,
-      required: true,
-    },
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
       type: String,
       required: true,
     },
