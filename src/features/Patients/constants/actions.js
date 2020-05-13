@@ -1,5 +1,4 @@
 export default {
-  // place to separate constant
   START_FETCH: 'START_FETCH',
   FINISH_FETCH: 'FINISH_FETCH',
   HANDLE_ERROR: 'HANDLE_ERROR',

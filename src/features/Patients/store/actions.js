@@ -1,4 +1,4 @@
-import PatientsProvider from 'features/Patients/provider';
+import PatientsProvider from 'features/Patients/services/PatientsService';
 
 import baseActions from 'features/Patients/constants/actions';
 import { mutations } from 'features/Patients/constants/store';
@@ -52,7 +52,7 @@ export const EDIT_PATIENT_PROFILE = async ({ commit, dispatch }, payload) => {
 
     if (!data) {
       // TODO: error handling; custom errors
-      throw new Error('Item does not exist no more');
+      throw new Error('Item does not exist');
     }
 
     commit(mutations.EDIT_ITEM, data);
