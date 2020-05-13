@@ -3,6 +3,7 @@ import Patient from 'entities/Patient.entity';
 
 import data from './temp';
 
+
 const emitCall = (callback, errorMessage = '', delay = 1000) => new Promise((resolve, reject) => {
   setTimeout(() => {
     if (errorMessage) {
