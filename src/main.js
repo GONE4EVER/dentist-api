@@ -1,5 +1,6 @@
 import Vue from 'vue';
-import vuetify from 'plugins/vuetify';
+import Vuetify from 'vuetify/lib';
+
 import 'normalize.css';
 
 import App from './App.vue';
@@ -9,7 +10,10 @@ import store from './store';
 import './registerComponents';
 
 
+Vue.use(Vuetify);
 Vue.config.productionTip = false;
+
+const vuetify = new Vuetify({});
 
 new Vue({
   router,
