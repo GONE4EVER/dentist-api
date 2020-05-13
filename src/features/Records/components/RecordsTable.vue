@@ -24,7 +24,7 @@
         >
           <template v-if="editableProp" #[editableProp]={item}>
             <v-btn icon v-on="on" @click="setSelectedItem(item)">
-              <v-icon color="indigo">mdi-note</v-icon>
+              <v-icon color="indigo">mdi-note-text</v-icon>
             </v-btn>
           </template>
         </base-datatable>
@@ -80,6 +80,10 @@ export default {
           value: 'patient',
         },
         {
+          text: 'Phone number',
+          value: 'phoneNumber',
+        },
+        {
           text: 'Notes',
           value: 'notes',
           sortable: false,
@@ -97,10 +101,7 @@ export default {
     selectedRecord() {
       const { getOne, selectedRecordId } = this;
 
-      return {
-        ...getOne(selectedRecordId),
-        title: 'Record',
-      };
+      return getOne(selectedRecordId);
     },
     filteredList() {
       const { search, getList } = this;

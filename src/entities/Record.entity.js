@@ -19,8 +19,11 @@ export default class Record {
     this.time = formatters.time.format(date);
 
     this.doctor = new Doctor(doctor).fullName;
-    this.patient = new Patient(patient).fullName;
 
     this.notes = notes || '';
+
+    const patientsProfile = new Patient(patient);
+    this.patient = patientsProfile.fullName;
+    this.phoneNumber = patientsProfile.phoneNumber;
   }
 }

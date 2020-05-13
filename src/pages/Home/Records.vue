@@ -13,11 +13,11 @@
       <v-icon>mdi-plus</v-icon>
     </v-btn>
 
-    <!-- card -->
+    <new-record-card v-if="dialogOpened" :isOpened.sync="dialogOpened"/>
 
     <base-snackbar
-      :visible="Boolean(errorState)"
-      :text="errorState || 'null'"
+      :visible="Boolean(patientsError || recordsError)"
+      :text="recordsError || patientsError || 'null'"
       color="error"
     />
   </v-card>
@@ -26,13 +26,16 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
+import NewRecordCard from 'features/Records/components/NewRecordCard.vue';
 import RecordsTable from 'features/Records/components/RecordsTable.vue';
 
-import { actions, getters } from 'features/Records/constants/store';
+import * as patients from 'features/Patients/constants/store';
+import * as records from 'features/Records/constants/store';
 
 
 export default {
   components: {
+    NewRecordCard,
     RecordsTable,
   },
   data: () => ({
@@ -40,12 +43,13 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      errorState: getters.GET_ERROR_STATE,
+      patientsError: patients.getters.GET_ERROR_STATE,
+      recordsError: records.getters.GET_ERROR_STATE,
     }),
   },
   methods: {
     ...mapActions({
-      fetchRecords: actions.GET_RECORDS,
+      fetchRecords: records.actions.GET_RECORDS,
     }),
   },
   created() {

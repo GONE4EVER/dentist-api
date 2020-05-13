@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import doctors from 'features/Doctors/store';
 import patients from 'features/Patients/store';
 import records from 'features/Records/store';
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
+    doctors,
     patients,
     records,
   },

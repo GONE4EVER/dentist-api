@@ -5,17 +5,14 @@ export default class Patient extends Person {
   constructor(props) {
     const {
       address,
-      email,
       company,
+      email,
       job,
       notes,
       ...rest
     } = props;
 
     super(rest);
-
-
-    this.id = Math.ceil(Math.random() * 1000000000); // TODO: remove
 
     this.address = address;
     this.email = email;
