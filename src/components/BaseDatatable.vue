@@ -1,27 +1,17 @@
 <template>
   <v-card>
-    <v-card-title>
-      {{ title }}
-      <v-spacer v-if="Boolean(title)"></v-spacer>
-      <v-text-field
-        v-if="searchable"
-        :value="search"
-        @input="onSearchUpdate"
-        append-icon="mdi-magnify"
-        clearable
-        label="Search"
-        outlined
-      ></v-text-field>
-    </v-card-title>
     <v-data-table
       :headers="headers"
       :items="dataSource"
       :loading="loading"
       :search="search"
     >
-      <template #item.notes="{item}">
-        <slot name="notes" :item="item">
-          {{ item.notes }}
+      <template
+        v-if="Boolean(editableProp)"
+        #[slotName]="{item}"
+      >
+        <slot :name="editableProp" :item="item">
+          {{ item[editableProp] }}
         </slot>
       </template>
     </v-data-table>
@@ -31,10 +21,6 @@
 <script>
 export default {
   props: {
-    title: {
-      type: String,
-      default: '',
-    },
     dataSource: {
       type: Array,
       required: true,
@@ -55,10 +41,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    editableProp: {
+      type: String,
+      default: '',
+    },
   },
-  methods: {
-    onSearchUpdate(value) {
-      this.$emit('update:search', value);
+  computed: {
+    slotName() {
+      return `item.${this.editableProp}`;
     },
   },
 };

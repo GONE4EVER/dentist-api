@@ -1,162 +1,126 @@
 <template>
   <v-card>
-    <base-datatable
-      title="Records"
-      searchable
-      :dataSource="desserts"
-      :headers="headers"
-    />
+    <v-dialog persistent v-model="dialogOpened" max-width="600">
+      <template #activator="{ on }">
+        <v-card-title>
+          {{ title }}
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            clearable
+            label="Search"
+            outlined
+          ></v-text-field>
+        </v-card-title>
+
+        <base-datatable
+          searchable
+          :dataSource="filteredList"
+          :headers="headers"
+          :loading="fetching"
+          :search.sync="search"
+          :editableProp="editableProp"
+        >
+          <template v-if="editableProp" #[editableProp]={item}>
+            <v-btn icon v-on="on" @click="setSelectedItem(item)">
+              <v-icon color="indigo">mdi-note</v-icon>
+            </v-btn>
+          </template>
+        </base-datatable>
+      </template>
+
+      <details-card
+        v-bind="selectedRecord"
+        :isOpened.sync="dialogOpened"
+        @updateContent="handleNotesUpdate"
+      />
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
+import DetailsCard from 'components/DetailsCard.vue';
+
+import { actions, getters } from 'features/Records/constants/store';
+
 
 export default {
+  components: {
+    DetailsCard,
+  },
   data() {
     return {
-      search: '',
+      title: 'Records',
+      editableProp: 'notes',
+
+      search: null,
+
+      selectedRecordId: null,
+      dialogOpened: false,
+
       headers: [
         {
-          text: 'Full Name',
+          text: 'Doctor',
           align: 'start',
-          value: 'name',
-        },
-        { text: 'Doctor', value: 'fat' },
-        { text: 'Phone number', value: 'calories' },
-        { text: 'Date', value: 'carbs' },
-        { text: 'Time', value: 'protein' },
-      ],
-      desserts: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: '1%',
+          value: 'doctor',
         },
         {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: '1%',
+          text: 'Date',
+          value: 'date',
         },
         {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: '7%',
+          text: 'Time',
+          value: 'time',
         },
         {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: '8%',
+          text: 'Patient',
+          value: 'patient',
         },
         {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: '16%',
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: '0%',
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: '2%',
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: '45%',
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%',
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%',
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%',
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%',
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%',
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%',
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%',
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%',
+          text: 'Notes',
+          value: 'notes',
+          sortable: false,
+          filterable: false,
         },
       ],
     };
+  },
+  computed: {
+    ...mapGetters({
+      getList: getters.GET_LIST,
+      getOne: getters.GET_ONE,
+      fetching: getters.GET_FETCHING_STATE,
+    }),
+    selectedRecord() {
+      const { getOne, selectedRecordId } = this;
+
+      return {
+        ...getOne(selectedRecordId),
+        title: 'Record',
+      };
+    },
+    filteredList() {
+      const { search, getList } = this;
+
+      return getList(search);
+    },
+  },
+  methods: {
+    ...mapActions({
+      editSelectedProfile: actions.EDIT_RECORD,
+    }),
+    setSelectedItem({ id }) {
+      this.selectedRecordId = id;
+    },
+    handleNotesUpdate(newValue) {
+      this.editSelectedProfile({
+        notes: newValue,
+        id: this.selectedRecordId,
+      });
+    },
   },
 };
 </script>

@@ -2,23 +2,35 @@
   <v-card>
     <v-dialog persistent v-model="dialogOpened" max-width="600">
       <template #activator="{ on }">
+        <v-card-title>
+          {{ title }}
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            clearable
+            label="Search"
+            outlined
+          ></v-text-field>
+        </v-card-title>
+
         <base-datatable
-          title="Regitered patients"
           searchable
-          :search.sync="search"
           :dataSource="filteredList"
           :headers="headers"
           :loading="fetching"
+          :search.sync="search"
+          :editableProp="editableProp"
         >
-          <template #notes={item}>
+          <template v-if="editableProp" #[editableProp]={item}>
             <v-btn icon v-on="on" @click="setSelectedItem(item)">
-              <v-icon color="blue darken-1">mdi-note</v-icon>
+              <v-icon color="pink">mdi-note</v-icon>
             </v-btn>
           </template>
         </base-datatable>
       </template>
+
       <details-card
-        title="Console log"
         v-bind="selectedPatient"
         :isOpened.sync="dialogOpened"
         @updateContent="handleNotesUpdate"
@@ -41,10 +53,14 @@ export default {
   },
   data() {
     return {
+      title: 'Regitered patients',
+      editableProp: 'notes',
+
       search: null,
-      selectedDate: null,
+
       selectedPatientId: null,
       dialogOpened: false,
+
       headers: [
         {
           text: 'Full Name',
@@ -80,23 +96,26 @@ export default {
   computed: {
     ...mapGetters({
       getList: getters.GET_LIST,
-      fetching: getters.GET_FETCHING_STATE,
       getOne: getters.GET_ONE,
+      fetching: getters.GET_FETCHING_STATE,
     }),
     selectedPatient() {
       const { getOne, selectedPatientId } = this;
+      const patient = getOne(selectedPatientId);
 
-      return getOne(selectedPatientId);
+      return {
+        ...patient,
+        title: patient?.fullName,
+      };
     },
     filteredList() {
-      const { search, selectedDate, getList } = this;
+      const { search, getList } = this;
 
-      return getList(search, selectedDate);
+      return getList(search);
     },
   },
   methods: {
     ...mapActions({
-      fetchPatients: actions.GET_PATIENTS,
       editSelectedProfile: actions.EDIT_PATIENT_PROFILE,
     }),
     setSelectedItem({ id }) {
