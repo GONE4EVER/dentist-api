@@ -8,6 +8,7 @@ const baseDate2 = new Date('May 23, 2020 09:52:00');
 
 export default [
   {
+    id: 0,
     date: baseDate1,
 
     doctor: doctors.find(({ id }) => id === 0),
@@ -15,6 +16,7 @@ export default [
     notes: 'Corey Taylor\'s dentist',
   },
   {
+    id: 1,
     date: baseDate2,
 
     doctor: doctors.find(({ id }) => id === 1),
@@ -22,6 +24,7 @@ export default [
     notes: 'Roy Jones\'s dentist',
   },
   {
+    id: 2,
     date: baseDate2,
 
     doctor: doctors.find(({ id }) => id === 2),

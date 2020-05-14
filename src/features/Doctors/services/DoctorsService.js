@@ -10,6 +10,6 @@ export default {
   getAll: async () => emitFetch(
     () => data.map((dataItem) => new Doctor(dataItem)),
     '', // 'Data loading error',
-    3000,
+    2000,
   ),
 };
