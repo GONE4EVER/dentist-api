@@ -3,7 +3,10 @@ import Patients from 'pages/Home/Patients.vue';
 
 import * as constants from 'pages/Home/routes/constants';
 
-
+/**
+ * TODO: add Navigation guard
+ * TODO: add authentication
+*/
 const routes = {
   path: constants.ROOT_PATH,
   name: constants.ROOT_NAME,
@@ -21,7 +24,6 @@ const routes = {
     },
   ],
   beforeEnter: (to, from, next) => {
-    // TODO: Navigation guard
     next();
   },
 };

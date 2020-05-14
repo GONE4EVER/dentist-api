@@ -5,7 +5,9 @@ import emitFetch from 'temp/emitFetch';
 import data from 'temp/doctors';
 
 
-// TODO: error handling
+/**
+ * TODO: error handling
+*/
 export default {
   getAll: async () => emitFetch(
     () => data.map((dataItem) => new Doctor(dataItem)),

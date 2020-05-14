@@ -18,6 +18,7 @@ export const GET_DOCTORS = async ({ commit, dispatch }) => {
     const data = await DoctorsService.getAll();
 
     commit(mutations.SET_ITEMS_LIST, data);
+    commit(mutations.SET_ERROR_STATE, null);
   } catch (err) {
     dispatch(baseActions.HANDLE_ERROR);
   } finally {

@@ -3,7 +3,9 @@ import Patient from 'entities/Patient.entity';
 
 import formatters from 'utils/formatters';
 
-
+/**
+ * TODO: remove id
+*/
 export default class Record {
   constructor(props) {
     const {
@@ -14,7 +16,7 @@ export default class Record {
       id,
     } = props;
 
-    this.id = id; // TODO: remove
+    this.id = id;
 
     this.date = formatters.shortDate.format(date);
     this.time = formatters.time.format(date);

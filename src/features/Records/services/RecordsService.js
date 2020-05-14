@@ -5,15 +5,17 @@ import emitFetch from 'temp/emitFetch';
 import data from 'temp/records';
 
 
-// TODO: error handling
+/**
+ * TODO: error handling
+*/
 export default {
   getAll: async () => emitFetch(
     () => data.map((dataItem) => new Record(dataItem)),
-    // 'Data loading error',
+    '' /* 'Data loading error' */,
   ),
   create: async (payload) => emitFetch(
     () => new Record(payload),
-    // 'Data loading error',
+    '' /* 'Data loading error' */,
   ),
   update: async (payload) => emitFetch(
     () => {
@@ -23,6 +25,6 @@ export default {
         ? new Record({ ...originalItem, ...payload })
         : null;
     },
-    // 'Loading error occured',
+    '' /* 'Data loading error' */,
   ),
 };

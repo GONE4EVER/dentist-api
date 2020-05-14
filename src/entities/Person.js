@@ -1,3 +1,6 @@
+/**
+ * TODO: remove id
+*/
 class Person {
   constructor(props) {
     const {
@@ -7,7 +10,7 @@ class Person {
       id,
     } = props;
 
-    this.id = id; // TODO: remove
+    this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
 
