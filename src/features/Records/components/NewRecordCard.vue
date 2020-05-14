@@ -32,11 +32,11 @@
                 <v-combobox
                   v-model="patient.value"
                   :items="patientItems"
+                  :loading="patientsFetching"
                   :rules="patient.rules"
                   clearable
                   hide-no-data
                   label="Patient full name"
-                  :loading="patientsFetching"
                   required
                 />
 
@@ -44,11 +44,11 @@
                   v-model="doctor.value"
                   @change="onDoctorChange"
                   :items="doctorItems"
+                  :loading="doctorsFetching"
                   :rules="doctor.rules"
                   clearable
                   hide-no-data
                   label="Doctor"
-                  :loading="doctorsFetching"
                   required
                 />
               </v-col>
@@ -57,44 +57,52 @@
 
             <v-row>
               <v-col cols="6">
-                <v-menu
-                  ref="menu"
-                  v-model="datePicker"
-                  :close-on-content-click="false"
-                  transition="slide-y-reverse-transition"
-                  offset-y
-                  min-width="290px"
+                <base-picker-menu
+                  ref="dateMenu"
+                  :isOpened="datePicker"
+                  :inputDisabled="!Boolean(doctor.value)"
+                  :inputSource="formattedDate"
+                  icon="mdi-calendar"
+                  label="Preferable date"
                 >
-                  <template v-slot:activator="{ on }">
-                    <v-text-field
-                      v-model="formattedDate"
-                      v-on="on"
-                      label="Preferable date"
-                      prepend-icon="mdi-calendar"
-                      :disabled="Boolean(!doctor.value)"
-                      readonly
-                    />
-                  </template>
-
-                  <v-date-picker
+                  <base-date-picker
                     v-model="pickedDate"
                     :allowed-dates="allowedDates"
+                    @close="datePicker = false"
                     :first-day-of-week="1"
                     :min="minDate"
-                    scrollable
-                    show-current
+                    @submit="$refs.dateMenu.save(pickedDate)"
+                  />
+                </base-picker-menu>
+
+              </v-col>
+
+              <v-col cols="6">
+                <base-picker-menu
+                  ref="timeMenu"
+                  :isOpened="timePicker"
+                  :inputDisabled="!Boolean(pickedDate)"
+                  :inputSource="pickedTime"
+                  icon="mdi-alarm"
+                  label="Preferable time"
+                >
+                  <v-time-picker
+                    v-model="pickedTime"
+                    :allowed-hours="allowedHours"
+                    :allowed-minutes="allowedMinutes"
+                    format="24hr"
                   >
                     <v-spacer />
 
-                    <v-btn text color="primary" @click="datePicker = false">
+                    <v-btn text color="primary" @click="timePicker = false">
                       Cancel
                     </v-btn>
 
-                    <v-btn text color="primary" @click="$refs.menu.save(pickedDate)">
+                    <v-btn text color="primary" @click="$refs.timeMenu.save(pickedTime)">
                       OK
                     </v-btn>
-                  </v-date-picker>
-                </v-menu>
+                  </v-time-picker>
+                </base-picker-menu>
               </v-col>
             </v-row>
 
@@ -180,17 +188,14 @@ export default {
     },
   },
   data: () => ({
-    pickedDate: null,
-    formattedDate: null,
-    minDate: formatters.isoFormat(formatters.shortDate)(new Date()),
-
+    datePicker: false,
     doctor: {
       ...BASE_CONFIG,
       availability: [],
     },
-    datePicker: false,
     error: '',
-
+    formattedDate: null,
+    minDate: formatters.isoFormat(formatters.shortDate)(new Date()),
     notes: {
       value: null,
       rules: [
@@ -204,7 +209,9 @@ export default {
       ],
     },
     patient: { ...BASE_CONFIG },
-
+    pickedDate: null,
+    pickedTime: null,
+    timePicker: false,
     valid: true,
   }),
   computed: {
@@ -243,12 +250,18 @@ export default {
     }),
     onDoctorChange(newValue) {
       this.pickedDate = null;
+      this.pickedTime = null;
+
       this.doctor.availability = newValue?.availability || [];
     },
     allowedDates(value) {
       return this.doctor.availability
         .some(({ isoDate }) => isoDate === value);
     },
+
+    allowedHours: (v) => v % 2,
+    allowedMinutes: (v) => v % 10 === 0,
+
     validate() {
       this.$refs.form.validate();
     },
@@ -266,6 +279,7 @@ export default {
         doctor: this.doctor.value,
         notes: this.notes.value,
         patient: this.patient.value,
+        time: this.pickedTime,
       };
     },
     checkIfEmpty() {
@@ -299,8 +313,12 @@ export default {
       }
     },
     pickedDate(value) {
-      this.formattedDate = formatters.shortDate
-        .format(new Date(value));
+      this.formattedDate = value
+        ? formatters.shortDate.format(new Date(value))
+        : value;
+    },
+    datePicker(v) {
+      console.log(v);
     },
   },
   mounted() {
