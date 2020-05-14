@@ -23,9 +23,16 @@
 </template>
 
 <script>
-import { ROOT_NAME as homeRouteName } from '../../../pages/Home/routes/constants';
-// TODO: replace items with Route.entity objects
+import {
+  PATIENTS_LIST_NAME,
+  ROOT_NAME,
+  RECORDS_LIST_NAME,
+} from 'pages/Home/routes/constants';
 
+
+/**
+ * TODO: replace items with Route.entity objects
+*/
 export default {
   data: () => ({
     active: 'patientsList',
@@ -33,25 +40,25 @@ export default {
       {
         icon: 'mdi-contacts',
         text: 'Patients list',
-        routeName: 'patientsList', // TODO: replace with constant
+        routeName: PATIENTS_LIST_NAME,
       },
       {
         icon: 'mdi-calendar',
         text: 'Records',
-        routeName: 'recordsList', // TODO: replace with constant
+        routeName: RECORDS_LIST_NAME,
       },
       {
         icon: 'mdi-logout-variant',
         'icon-alt': 'mdi-chevron-down',
         text: 'Log out',
-        routeName: 'login', // TODO: replace with constant
+        routeName: 'login',
       },
     ],
   }),
   mounted() {
     const { name } = this.$route;
 
-    if (name === homeRouteName) {
+    if (name === ROOT_NAME) {
       this.$router.push({ name: this.active });
     }
   },
