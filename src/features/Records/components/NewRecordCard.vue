@@ -29,7 +29,7 @@
               class="mr-0"
             >
               <v-col cols="12">
-                 <v-combobox
+                <v-combobox
                   v-model="patient.value"
                   :items="patientItems"
                   :rules="patient.rules"
@@ -42,6 +42,7 @@
 
                 <v-combobox
                   v-model="doctor.value"
+                  @change="onDoctorChange"
                   :items="doctorItems"
                   :rules="doctor.rules"
                   clearable
@@ -54,12 +55,48 @@
 
             </v-row>
 
-            <v-text-field
-              v-model="date.value"
-              :rules="date.rules"
-              label="Date"
-              required
-            ></v-text-field>
+            <v-row>
+              <v-col cols="6">
+                <v-menu
+                  ref="menu"
+                  v-model="datePicker"
+                  :close-on-content-click="false"
+                  transition="slide-y-reverse-transition"
+                  offset-y
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="formattedDate"
+                      v-on="on"
+                      label="Preferable date"
+                      prepend-icon="mdi-calendar"
+                      :disabled="Boolean(!doctor.value)"
+                      readonly
+                    />
+                  </template>
+
+                  <v-date-picker
+                    v-model="pickedDate"
+                    :allowed-dates="allowedDates"
+                    :first-day-of-week="1"
+                    :min="minDate"
+                    scrollable
+                    show-current
+                  >
+                    <v-spacer />
+
+                    <v-btn text color="primary" @click="datePicker = false">
+                      Cancel
+                    </v-btn>
+
+                    <v-btn text color="primary" @click="$refs.menu.save(pickedDate)">
+                      OK
+                    </v-btn>
+                  </v-date-picker>
+                </v-menu>
+              </v-col>
+            </v-row>
 
             <v-textarea
               v-model="notes.value"
@@ -67,6 +104,7 @@
               :rules="notes.rules"
               auto-grow
               clearable
+              label="Notes"
               outlined
             />
           </v-form>
@@ -80,6 +118,7 @@
           >
             Cancel
           </v-btn>
+
           <v-spacer />
 
           <v-btn
@@ -87,7 +126,7 @@
             class="mr-4"
             @click="reset"
           >
-            Reset Form
+            Reset
           </v-btn>
 
           <v-btn
@@ -108,7 +147,6 @@
       buttonText="Close anyway"
       color="error"
     />
-
   </v-dialog>
 </template>
 
@@ -119,17 +157,20 @@ import * as doctors from 'features/Doctors/constants/store';
 import * as patients from 'features/Patients/constants/store';
 import * as records from 'features/Records/constants/store';
 
+import formatters from 'utils/formatters';
+
 
 const ERROR_BASE_TEXT = 'Required';
 const FORM_IS_NOT_EMPTY_ERROR = 'Form is not empty';
 
 const NOTES_INVALID = 'Too many symbols';
 
-const notEmpty = (errorText) => (v) => !!v || errorText;
-const baseConfig = {
+const NOT_EMPTY = (errorText) => (v) => !!v || errorText;
+const BASE_CONFIG = {
   value: null,
-  rules: [ notEmpty(ERROR_BASE_TEXT) ],
+  rules: [ NOT_EMPTY(ERROR_BASE_TEXT) ],
 };
+
 
 export default {
   props: {
@@ -139,9 +180,15 @@ export default {
     },
   },
   data: () => ({
-    date: { ...baseConfig },
-    doctor: { ...baseConfig },
+    pickedDate: null,
+    formattedDate: null,
+    minDate: formatters.isoFormat(formatters.shortDate)(new Date()),
 
+    doctor: {
+      ...BASE_CONFIG,
+      availability: [],
+    },
+    datePicker: false,
     error: '',
 
     notes: {
@@ -156,18 +203,11 @@ export default {
         },
       ],
     },
-    patient: { ...baseConfig },
+    patient: { ...BASE_CONFIG },
 
     valid: true,
   }),
   computed: {
-    phoneNumber() {
-      const { prefix, value } = this.phone;
-
-      return value
-        ? `${prefix}${value}`
-        : value;
-    },
     ...mapGetters({
       doctorsList: doctors.getters.GET_LIST,
       doctorsError: doctors.getters.GET_ERROR_STATE,
@@ -186,11 +226,13 @@ export default {
         .map(({ fullName, id }) => ({ id, value: fullName, text: fullName }));
     },
     doctorItems() {
-      console.log(this
-        .doctorsList);
-      return this
-        .doctorsList
-        .map(({ fullName, id }) => ({ id, value: fullName, text: fullName }));
+      return this.doctorsList
+        .map(({ availability, id, fullName }) => ({
+          id,
+          value: id,
+          text: fullName,
+          availability,
+        }));
     },
   },
   methods: {
@@ -199,6 +241,14 @@ export default {
       fetchDoctors: doctors.actions.GET_DOCTORS,
       fetchPatients: patients.actions.GET_PATIENTS,
     }),
+    onDoctorChange(newValue) {
+      this.pickedDate = null;
+      this.doctor.availability = newValue?.availability || [];
+    },
+    allowedDates(value) {
+      return this.doctor.availability
+        .some(({ isoDate }) => isoDate === value);
+    },
     validate() {
       this.$refs.form.validate();
     },
@@ -212,8 +262,8 @@ export default {
     },
     getFormData() {
       return {
-        date: this.date.value,
-        doctor: this.date.doctor,
+        date: this.pickedDate,
+        doctor: this.doctor.value,
         notes: this.notes.value,
         patient: this.patient.value,
       };
@@ -247,6 +297,10 @@ export default {
       if (!fetchingState && !recordsError && !checkIfEmpty()) {
         close();
       }
+    },
+    pickedDate(value) {
+      this.formattedDate = formatters.shortDate
+        .format(new Date(value));
     },
   },
   mounted() {
