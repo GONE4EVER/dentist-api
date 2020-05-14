@@ -7,11 +7,11 @@
     <v-card>
       <v-overlay :value="recordsFetching" absolute opacity="0.8">
         <v-progress-circular
+          color="light-blue"
           indeterminate
           rotate
           size="64"
           width="5"
-          color="light-blue"
         />
       </v-overlay>
 
@@ -43,6 +43,7 @@
                 <v-combobox
                   v-model="doctor.value"
                   @change="onDoctorChange"
+                  @click:clear="onDoctorChange"
                   :items="doctorItems"
                   :loading="doctorsFetching"
                   :rules="doctor.rules"
@@ -52,7 +53,6 @@
                   required
                 />
               </v-col>
-
             </v-row>
 
             <v-row>
@@ -65,15 +65,14 @@
                   :isOpened.sync="datePicker"
                   icon="mdi-calendar"
                   label="Preferable date"
-                >
-                </date-picker>
-
+                />
               </v-col>
 
               <v-col cols="6">
                 <time-picker
                   :allowedHours="allowedHours"
                   :allowedMinutes="allowedMinutes"
+                  :allowedItems="doctor.availability"
                   :disabled="!Boolean(pickedDate)"
                   :time.sync="pickedTime"
                   :isOpened.sync="timePicker"
@@ -115,7 +114,7 @@
 
           <v-btn
             @click="submit"
-            :disabled="!valid"
+            :disabled="!isFormValid"
             color="success"
           >
             Submit
@@ -128,6 +127,7 @@
       @beforeClose="close"
       :visible="Boolean(error)"
       :text="error || 'null'"
+      :timeout="errorTimeout"
       buttonText="Close anyway"
       color="error"
     />
@@ -177,6 +177,7 @@ export default {
       availability: [],
     },
     error: '',
+    errorTimeout: 3000,
     formattedDate: null,
     minDate: formatters.isoFormat(formatters.shortDate)(new Date()),
     notes: {
@@ -224,6 +225,9 @@ export default {
           availability,
         }));
     },
+    isFormValid() {
+      return this.valid && this.pickedDate && this.pickedTime;
+    },
   },
   methods: {
     ...mapActions({
@@ -241,15 +245,21 @@ export default {
       return this.doctor.availability
         .some(({ isoDate }) => isoDate === value);
     },
-
-    allowedHours: (v) => v % 2,
-    allowedMinutes: (v) => v % 10 === 0,
-
+    allowedHours(value) {
+      return this.doctor.availability
+        .some(({ time }) => Number(time.split(':')[0]) === value);
+    },
+    allowedMinutes(value) {
+      return this.doctor.availability
+        .some(({ time }) => Number(time.split(':')[1]) === value);
+    },
     validate() {
       this.$refs.form.validate();
     },
     reset() {
       this.error = '';
+      this.onDoctorChange(); // force reset
+
       this.$refs.form.reset();
     },
     close() {
@@ -299,6 +309,11 @@ export default {
       this.formattedDate = value
         ? formatters.shortDate.format(new Date(value))
         : value;
+    },
+    error(value) {
+      if (value) {
+        setTimeout(() => { this.error = ''; }, this.errorTimeout);
+      }
     },
   },
   mounted() {
