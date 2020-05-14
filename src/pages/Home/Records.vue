@@ -44,6 +44,7 @@ export default {
   computed: {
     ...mapGetters({
       patientsError: patients.getters.GET_ERROR_STATE,
+      recordsList: records.getters.GET_LIST,
       recordsError: records.getters.GET_ERROR_STATE,
     }),
   },
@@ -53,7 +54,9 @@ export default {
     }),
   },
   created() {
-    this.fetchRecords();
+    if (!this.recordsList().length) {
+      this.fetchRecords();
+    }
   },
 };
 </script>
