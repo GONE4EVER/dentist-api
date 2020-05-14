@@ -117,15 +117,10 @@
               :rules="notes.rules"
               auto-grow
               clearable
+              label="Notes"
               outlined
             />
 
-            <v-checkbox
-              v-model="checkbox"
-              :rules="[v => !!v || 'You must agree to continue!']"
-              label="I accept privacy policy blablabla"
-              required
-            ></v-checkbox>
           </v-form>
         </v-card-text>
 
@@ -144,7 +139,7 @@
             class="mr-4"
             @click="reset"
           >
-            Reset Form
+            Reset
           </v-btn>
 
           <v-btn
@@ -186,11 +181,12 @@ const PHONE_INVALID = 'Invalid Number';
 const PHONE_REQUIRED = 'Phone number required';
 
 
-const notEmpty = (errorText) => (v) => !!v || errorText;
-const baseConfig = {
+const NOT_EMPTY = (errorText) => (v) => !!v || errorText;
+const BASE_CONFIG = {
   value: null,
-  rules: [ notEmpty(ERROR_BASE_TEXT) ],
+  rules: [ NOT_EMPTY(ERROR_BASE_TEXT) ],
 };
+
 
 export default {
   props: {
@@ -206,18 +202,18 @@ export default {
       firstName: null,
       lastName: null,
       rules: [
-        notEmpty(ERROR_BASE_TEXT),
+        NOT_EMPTY(ERROR_BASE_TEXT),
         (v) => (v && v.length <= 12) || NAME_INVALID,
       ],
     },
-    address: { ...baseConfig },
-    job: { ...baseConfig },
-    company: { ...baseConfig },
+    address: { ...BASE_CONFIG },
+    job: { ...BASE_CONFIG },
+    company: { ...BASE_CONFIG },
     phone: {
       prefix: PHONE_PREFIX,
       value: null,
       rules: [
-        notEmpty(PHONE_REQUIRED),
+        NOT_EMPTY(PHONE_REQUIRED),
         (v) => v !== PHONE_PREFIX,
         (v) => /^(([0-9]){9})$/.test(v) || PHONE_INVALID,
       ],
@@ -225,7 +221,7 @@ export default {
     email: {
       value: null,
       rules: [
-        notEmpty(ERROR_BASE_TEXT),
+        NOT_EMPTY(ERROR_BASE_TEXT),
         (v) => /.+@.+\..+/.test(v) || EMAIL_INVALID,
       ],
     },
@@ -241,7 +237,6 @@ export default {
         },
       ],
     },
-    checkbox: false,
   }),
   computed: {
     phoneNumber() {
