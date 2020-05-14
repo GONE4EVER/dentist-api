@@ -196,33 +196,24 @@ export default {
     },
   },
   data: () => ({
+    address: { ...BASE_CONFIG },
+    company: { ...BASE_CONFIG },
+    email: {
+      value: null,
+      rules: [
+        NOT_EMPTY(ERROR_BASE_TEXT),
+        (v) => /.+@.+\..+/.test(v) || EMAIL_INVALID,
+      ],
+    },
     error: '',
-    valid: true,
+    errorTimeout: 3000,
+    job: { ...BASE_CONFIG },
     name: {
       firstName: null,
       lastName: null,
       rules: [
         NOT_EMPTY(ERROR_BASE_TEXT),
         (v) => (v && v.length <= 12) || NAME_INVALID,
-      ],
-    },
-    address: { ...BASE_CONFIG },
-    job: { ...BASE_CONFIG },
-    company: { ...BASE_CONFIG },
-    phone: {
-      prefix: PHONE_PREFIX,
-      value: null,
-      rules: [
-        NOT_EMPTY(PHONE_REQUIRED),
-        (v) => v !== PHONE_PREFIX,
-        (v) => /^(([0-9]){9})$/.test(v) || PHONE_INVALID,
-      ],
-    },
-    email: {
-      value: null,
-      rules: [
-        NOT_EMPTY(ERROR_BASE_TEXT),
-        (v) => /.+@.+\..+/.test(v) || EMAIL_INVALID,
       ],
     },
     notes: {
@@ -237,6 +228,16 @@ export default {
         },
       ],
     },
+    phone: {
+      prefix: PHONE_PREFIX,
+      value: null,
+      rules: [
+        NOT_EMPTY(PHONE_REQUIRED),
+        (v) => v !== PHONE_PREFIX,
+        (v) => /^(([0-9]){9})$/.test(v) || PHONE_INVALID,
+      ],
+    },
+    valid: true,
   }),
   computed: {
     phoneNumber() {
@@ -304,6 +305,11 @@ export default {
 
       if (!fetchingState && !errorState && !checkIfEmpty()) {
         close();
+      }
+    },
+    error(value) {
+      if (value) {
+        setTimeout(() => { this.error = ''; }, this.errorTimeout);
       }
     },
   },
