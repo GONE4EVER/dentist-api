@@ -4,10 +4,10 @@ class Person {
       firstName,
       lastName,
       phoneNumber,
+      id,
     } = props;
 
-    this.id = Math.ceil(Math.random() * 1000000000); // TODO: remove
-
+    this.id = id; // TODO: remove
     this.firstName = firstName;
     this.lastName = lastName;
 

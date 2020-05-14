@@ -11,11 +11,12 @@ export default class Record {
       doctor,
       patient,
       notes,
+      id,
     } = props;
 
-    this.id = Math.ceil(Math.random() * 1000000000); // TODO: remove
+    this.id = id; // TODO: remove
 
-    this.date = formatters.date.format(date);
+    this.date = formatters.shortDate.format(date);
     this.time = formatters.time.format(date);
 
     this.doctor = new Doctor(doctor).fullName;
