@@ -57,52 +57,28 @@
 
             <v-row>
               <v-col cols="6">
-                <base-picker-menu
-                  ref="dateMenu"
-                  :isOpened="datePicker"
-                  :inputDisabled="!Boolean(doctor.value)"
-                  :inputSource="formattedDate"
+                <date-picker
+                  :allowedDates="allowedDates"
+                  :date.sync="pickedDate"
+                  :disabled="!Boolean(doctor.value)"
+                  :inputModel="formattedDate"
+                  :isOpened.sync="datePicker"
                   icon="mdi-calendar"
                   label="Preferable date"
                 >
-                  <base-date-picker
-                    v-model="pickedDate"
-                    :allowed-dates="allowedDates"
-                    @close="datePicker = false"
-                    :first-day-of-week="1"
-                    :min="minDate"
-                    @submit="$refs.dateMenu.save(pickedDate)"
-                  />
-                </base-picker-menu>
+                </date-picker>
 
               </v-col>
 
               <v-col cols="6">
-                <base-picker-menu
-                  ref="timeMenu"
-                  :isOpened="timePicker"
-                  :inputDisabled="!Boolean(pickedDate)"
-                  :inputSource="pickedTime"
-                  icon="mdi-alarm"
-                  label="Preferable time"
-                >
-                  <v-time-picker
-                    v-model="pickedTime"
-                    :allowed-hours="allowedHours"
-                    :allowed-minutes="allowedMinutes"
-                    format="24hr"
-                  >
-                    <v-spacer />
-
-                    <v-btn text color="primary" @click="timePicker = false">
-                      Cancel
-                    </v-btn>
-
-                    <v-btn text color="primary" @click="$refs.timeMenu.save(pickedTime)">
-                      OK
-                    </v-btn>
-                  </v-time-picker>
-                </base-picker-menu>
+                <time-picker
+                  :allowedHours="allowedHours"
+                  :allowedMinutes="allowedMinutes"
+                  :disabled="!Boolean(pickedDate)"
+                  :time.sync="pickedTime"
+                  :isOpened.sync="timePicker"
+                  label="Preferable date"
+                />
               </v-col>
             </v-row>
 
@@ -161,6 +137,9 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
+import DatePicker from 'components/Datepicker.vue';
+import TimePicker from 'components/TimePicker.vue';
+
 import * as doctors from 'features/Doctors/constants/store';
 import * as patients from 'features/Patients/constants/store';
 import * as records from 'features/Records/constants/store';
@@ -181,6 +160,10 @@ const BASE_CONFIG = {
 
 
 export default {
+  components: {
+    DatePicker,
+    TimePicker,
+  },
   props: {
     isOpened: {
       type: Boolean,
@@ -316,9 +299,6 @@ export default {
       this.formattedDate = value
         ? formatters.shortDate.format(new Date(value))
         : value;
-    },
-    datePicker(v) {
-      console.log(v);
     },
   },
   mounted() {
