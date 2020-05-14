@@ -32,7 +32,7 @@
     <v-card-actions>
       <v-btn
         v-if="Boolean(errorMessage)"
-        @click="callCollapse(true)"
+        @click="close(true)"
         color="red"
         text
       >
@@ -45,7 +45,7 @@
         {{editMode ? 'Submit' : 'Edit'}}
       </v-btn>
 
-      <v-btn color="green darken-1" text @click="callCollapse(false)">
+      <v-btn color="green darken-1" text @click="close(false)">
         Close
       </v-btn>
     </v-card-actions>
@@ -103,7 +103,7 @@ export default {
         this.editMode = !editMode;
       }
     },
-    callCollapse(force) {
+    close(force) {
       if (!force && this.newNoteContent !== this.notes) {
         this.errorMessage = ERROR_MESSAGE;
         return;
