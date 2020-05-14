@@ -21,8 +21,9 @@
 
     <v-time-picker
       :allowed-hours="allowedHours"
-      :allowed-minutes="allowedMinutes"
+      :allowed-minutes="checkMinutes"
       @change="onTimeChange"
+      @click:hour="rememberHour"
       :value="time"
       format="24hr"
     >
@@ -40,10 +41,15 @@
 </template>
 
 <script>
+/**
+ * * allowedItems prop should be array containing "time" property of the
+ * * following format: <hours>:<minutes>
+*/
+
 export default {
   inheritAttrs: false,
   data: () => ({
-    timeValue: null,
+    hourSelected: null,
   }),
   props: {
     isOpened: {
@@ -56,6 +62,10 @@ export default {
     },
     allowedMinutes: {
       type: Function,
+      default: null,
+    },
+    allowedItems: {
+      type: Array,
       default: null,
     },
     time: {
@@ -78,6 +88,29 @@ export default {
     },
   },
   methods: {
+    rememberHour(value) {
+      this.hourSelected = value;
+    },
+    checkMinutes(value) {
+      const {
+        allowedHours,
+        allowedItems,
+        allowedMinutes,
+      } = this;
+
+      if (!allowedMinutes && !allowedHours) {
+        return true;
+      }
+      if (!allowedHours || !allowedItems) {
+        return allowedMinutes(value);
+      }
+      return allowedItems
+        .some(({ time }) => {
+          const isHourEqual = Number(time.split(':')[0]) === this.hourSelected;
+
+          return isHourEqual && Number(time.split(':')[1]) === value;
+        });
+    },
     onTimeChange(value) {
       this.$emit('update:time', value);
     },
