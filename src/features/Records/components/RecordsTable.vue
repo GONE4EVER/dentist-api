@@ -33,6 +33,7 @@
       <details-card
         v-bind="selectedRecord"
         :isOpened.sync="dialogOpened"
+        :fetching="fetching"
         @updateContent="handleNotesUpdate"
       />
     </v-dialog>

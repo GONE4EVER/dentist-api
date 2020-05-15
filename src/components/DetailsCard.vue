@@ -31,12 +31,12 @@
 
     <v-card-actions>
       <v-btn
-        v-if="Boolean(errorMessage)"
+        v-if="Boolean(editMode)"
         @click="close(true)"
         color="red"
         text
       >
-        Discard
+        Cancel
       </v-btn>
 
       <v-spacer />
@@ -77,6 +77,10 @@ export default {
       type: Boolean,
       required: true,
     },
+    fetching: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -116,7 +120,6 @@ export default {
   computed: {
     ...mapGetters({
       errorState: getters.GET_ERROR_STATE,
-      fetching: getters.GET_FETCHING_STATE,
     }),
   },
   watch: {
