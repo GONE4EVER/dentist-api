@@ -2,7 +2,7 @@ import Patient from 'entities/Patient.entity';
 
 // temporary
 import emitFetch from 'temp/emitFetch';
-import data from 'temp/patients';
+import fakeBackend from 'temp/fakeBackend';
 
 
 /**
@@ -10,19 +10,27 @@ import data from 'temp/patients';
 */
 export default {
   getAll: async () => emitFetch(
-    () => data.map((dataItem) => new Patient(dataItem)),
+    () => {
+      const data = fakeBackend.getPatients();
+
+      return data.map((dataItem) => new Patient(dataItem));
+    },
     // 'Data loading error',
   ),
   create: async (payload) => emitFetch(
-    () => new Patient(payload),
+    () => {
+      const data = fakeBackend.createPatient(payload);
+
+      return new Patient(data);
+    },
     // 'Data loading error',
   ),
   update: async (payload) => emitFetch(
     () => {
-      const originalItem = data.find(({ id }) => id === payload.id);
+      const data = fakeBackend.updatePatient(payload);
 
-      return originalItem
-        ? new Patient({ ...originalItem, ...payload })
+      return data
+        ? new Patient(data)
         : null;
     },
     // 'Loading error occured',

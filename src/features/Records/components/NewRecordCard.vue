@@ -270,9 +270,9 @@ export default {
     getFormData() {
       return {
         date: this.pickedDate,
-        doctorId: this.doctor.value?.id,
+        doctor: this.doctor.value?.id,
         notes: this.notes.value,
-        patientId: this.patient.value?.id,
+        patient: this.patient.value?.id,
         time: this.pickedTime,
       };
     },

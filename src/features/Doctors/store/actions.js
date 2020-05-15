@@ -18,9 +18,21 @@ export const GET_DOCTORS = async ({ commit, dispatch }) => {
     const data = await DoctorsService.getAll();
 
     commit(mutations.SET_ITEMS_LIST, data);
-    commit(mutations.SET_ERROR_STATE, null);
   } catch (err) {
-    dispatch(baseActions.HANDLE_ERROR);
+    dispatch(baseActions.HANDLE_ERROR, err);
+  } finally {
+    dispatch(baseActions.FINISH_FETCH);
+  }
+};
+
+export const EDIT_DOCTOR_PROFILE = async ({ commit, dispatch }, payload) => {
+  try {
+    dispatch(baseActions.START_FETCH);
+    const data = await DoctorsService.update(payload);
+
+    commit(mutations.EDIT_ITEM, data);
+  } catch (err) {
+    dispatch(baseActions.HANDLE_ERROR, err);
   } finally {
     dispatch(baseActions.FINISH_FETCH);
   }
