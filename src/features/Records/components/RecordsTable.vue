@@ -45,7 +45,9 @@ import { mapActions, mapGetters } from 'vuex';
 
 import DetailsCard from 'components/DetailsCard.vue';
 
-import { actions, getters } from 'features/Records/constants/store';
+import * as doctors from 'features/Doctors/constants/store';
+import * as patients from 'features/Patients/constants/store';
+import * as records from 'features/Records/constants/store';
 
 
 export default {
@@ -95,24 +97,48 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getList: getters.GET_LIST,
-      getOne: getters.GET_ONE,
-      fetching: getters.GET_FETCHING_STATE,
+      doctorsList: doctors.getters.GET_LIST,
+      getDoctorProfile: doctors.getters.GET_ONE,
+      getOne: records.getters.GET_ONE,
+      fetchingRecords: records.getters.GET_FETCHING_STATE,
+      fetchingDoctors: doctors.getters.GET_FETCHING_STATE,
+      patientsList: patients.getters.GET_LIST,
+      recordsList: records.getters.GET_LIST,
     }),
+    fetching() {
+      return this.fetchingRecords || this.fetchingDoctors;
+    },
     selectedRecord() {
       const { getOne, selectedRecordId } = this;
 
       return getOne(selectedRecordId);
     },
     filteredList() {
-      const { search, getList } = this;
+      const {
+        search, patientsList, recordsList, doctorsList,
+      } = this;
 
-      return getList(search);
+      const patientsFetched = patientsList();
+      const list = recordsList(search).map(
+        (record) => {
+          /* eslint no-param-reassign: 0 */
+          record.doctor = doctorsList
+            .find((d) => d.id === record.doctorId)?.fullName || 'Loading...';
+          record.patient = patientsFetched
+            .find((p) => p.id === record.patientId)?.fullName || 'Loading...';
+          record.phoneNumber = patientsFetched
+            .find((p) => p.id === record.patientId)?.phoneNumber || 'Loading...';
+
+          return record;
+        },
+      );
+
+      return list;
     },
   },
   methods: {
     ...mapActions({
-      editSelectedProfile: actions.EDIT_RECORD,
+      editSelectedProfile: records.actions.EDIT_RECORD,
     }),
     setSelectedItem({ id }) {
       this.selectedRecordId = id;

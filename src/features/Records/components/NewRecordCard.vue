@@ -232,8 +232,6 @@ export default {
   methods: {
     ...mapActions({
       addRecord: records.actions.ADD_RECORD,
-      fetchDoctors: doctors.actions.GET_DOCTORS,
-      fetchPatients: patients.actions.GET_PATIENTS,
     }),
     onDoctorChange(newValue) {
       this.pickedDate = null;
@@ -270,9 +268,9 @@ export default {
     getFormData() {
       return {
         date: this.pickedDate,
-        doctor: this.doctor.value?.id,
+        doctorId: this.doctor.value?.id,
         notes: this.notes.value,
-        patient: this.patient.value?.id,
+        patientId: this.patient.value?.id,
         time: this.pickedTime,
       };
     },
@@ -316,22 +314,6 @@ export default {
         setTimeout(() => { this.error = ''; }, this.errorTimeout);
       }
     },
-  },
-  mounted() {
-    const {
-      fetchDoctors,
-      fetchPatients,
-      doctorsList,
-      patientsList,
-    } = this;
-
-    if (!patientsList().length) {
-      fetchPatients();
-    }
-
-    if (!doctorsList.length) {
-      fetchDoctors();
-    }
   },
 };
 </script>

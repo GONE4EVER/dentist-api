@@ -15,7 +15,8 @@ export default {
 
       return data.map((dataItem) => new Patient(dataItem));
     },
-    // 'Data loading error',
+    '', // 'Data loading error',
+    1500,
   ),
   create: async (payload) => emitFetch(
     () => {
@@ -23,7 +24,7 @@ export default {
 
       return new Patient(data);
     },
-    // 'Data loading error',
+    '', // 'Data loading error',
   ),
   update: async (payload) => emitFetch(
     () => {
@@ -33,6 +34,6 @@ export default {
         ? new Patient(data)
         : null;
     },
-    // 'Loading error occured',
+    '', // 'Data loading error',
   ),
 };

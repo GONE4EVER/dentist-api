@@ -35,21 +35,14 @@ export default {
   createRecord(payload) {
     const {
       date,
-      doctor: doctorId,
-      patient: patientId,
       time,
     } = payload;
 
     const recordDate = new Date(`${date}, ${time}`);
 
-    const doctor = this.updateDoctor({ id: doctorId, recordDate });
-    const patient = patients.find((p) => p.id === patientId);
-
     return {
       ...payload,
       date: recordDate,
-      doctor,
-      patient,
     };
   },
   updateRecord(payload) {
