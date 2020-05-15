@@ -115,11 +115,13 @@ export default {
     },
     filteredList() {
       const {
-        search, patientsList, recordsList, doctorsList,
+        patientsList,
+        recordsList,
+        doctorsList,
       } = this;
 
       const patientsFetched = patientsList();
-      const list = recordsList(search).map(
+      const list = recordsList().map(
         (record) => {
           /* eslint no-param-reassign: 0 */
           record.doctor = doctorsList
