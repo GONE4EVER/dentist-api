@@ -3,4 +3,5 @@ export default {
   SET_ERROR_STATE: 'SET_ERROR_STATE',
 
   SET_ITEMS_LIST: 'SET_ITEMS_LIST',
+  EDIT_ITEM: 'EDIT_ITEM',
 };
