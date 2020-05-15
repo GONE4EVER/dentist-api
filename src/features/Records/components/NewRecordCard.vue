@@ -70,13 +70,13 @@
 
               <v-col cols="6">
                 <time-picker
+                  :allowedItems="doctor.availability"
                   :allowedHours="allowedHours"
                   :allowedMinutes="allowedMinutes"
-                  :allowedItems="doctor.availability"
                   :disabled="!Boolean(pickedDate)"
-                  :time.sync="pickedTime"
                   :isOpened.sync="timePicker"
-                  label="Preferable date"
+                  :time.sync="pickedTime"
+                  label="Preferable time"
                 />
               </v-col>
             </v-row>
@@ -247,7 +247,8 @@ export default {
     },
     allowedHours(value) {
       return this.doctor.availability
-        .some(({ time }) => Number(time.split(':')[0]) === value);
+        .some(({ time, date }) => date === this.formattedDate
+        && Number(time.split(':')[0]) === value);
     },
     allowedMinutes(value) {
       return this.doctor.availability
@@ -269,9 +270,9 @@ export default {
     getFormData() {
       return {
         date: this.pickedDate,
-        doctor: this.doctor.value,
+        doctorId: this.doctor.value?.id,
         notes: this.notes.value,
-        patient: this.patient.value,
+        patientId: this.patient.value?.id,
         time: this.pickedTime,
       };
     },
