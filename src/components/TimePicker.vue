@@ -23,7 +23,7 @@
       :allowed-hours="allowedHours"
       :allowed-minutes="checkMinutes"
       @change="onTimeChange"
-      @click:hour="rememberHour"
+      @click:hour="trackSelectedHour"
       :value="time"
       format="24hr"
     >
@@ -52,9 +52,9 @@ export default {
     hourSelected: null,
   }),
   props: {
-    isOpened: {
-      type: Boolean,
-      required: true,
+    allowedItems: {
+      type: Array,
+      default: null,
     },
     allowedHours: {
       type: Function,
@@ -64,13 +64,9 @@ export default {
       type: Function,
       default: null,
     },
-    allowedItems: {
-      type: Array,
-      default: null,
-    },
-    time: {
-      type: String,
-      default: null,
+    disabled: {
+      type: Boolean,
+      default: false,
     },
     inputModel: {
       validator(v) {
@@ -82,13 +78,17 @@ export default {
       type: String,
       default: '',
     },
-    disabled: {
+    isOpened: {
       type: Boolean,
-      default: false,
+      required: true,
+    },
+    time: {
+      type: String,
+      default: null,
     },
   },
   methods: {
-    rememberHour(value) {
+    trackSelectedHour(value) {
       this.hourSelected = value;
     },
     checkMinutes(value) {
