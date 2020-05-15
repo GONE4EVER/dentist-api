@@ -2,27 +2,36 @@ import Record from 'entities/Record.entity';
 
 // temporary
 import emitFetch from 'temp/emitFetch';
-import data from 'temp/records';
+import fakeBackend from 'temp/fakeBackend';
 
 
 /**
  * TODO: error handling
+ * TODO: replace date creating
 */
 export default {
   getAll: async () => emitFetch(
-    () => data.map((dataItem) => new Record(dataItem)),
+    () => {
+      const result = fakeBackend.getRecords();
+
+      return result.map((r) => new Record(r));
+    },
     '' /* 'Data loading error' */,
   ),
   create: async (payload) => emitFetch(
-    () => new Record(payload),
+    () => {
+      const result = fakeBackend.createRecord(payload);
+
+      return new Record(result);
+    },
     '' /* 'Data loading error' */,
   ),
   update: async (payload) => emitFetch(
     () => {
-      const originalItem = data.find(({ id }) => id === payload.id);
+      const updatedItem = fakeBackend.updateRecord(payload);
 
-      return originalItem
-        ? new Record({ ...originalItem, ...payload })
+      return updatedItem
+        ? new Record(updatedItem)
         : null;
     },
     '' /* 'Data loading error' */,

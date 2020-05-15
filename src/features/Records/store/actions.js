@@ -1,4 +1,4 @@
-import PatientsProvider from 'features/Records/services/RecordsService';
+import RecordsService from 'features/Records/services/RecordsService';
 
 import baseActions from 'features/Records/constants/actions';
 import { mutations } from 'features/Records/constants/store';
@@ -19,7 +19,7 @@ export const FINISH_FETCH = ({ commit }) => {
 export const GET_RECORDS = async ({ commit, dispatch }) => {
   try {
     dispatch(baseActions.START_FETCH);
-    const data = await PatientsProvider.getAll();
+    const data = await RecordsService.getAll();
 
     commit(mutations.SET_ITEMS_LIST, data);
     commit(mutations.SET_ERROR_STATE, null);
@@ -33,7 +33,7 @@ export const GET_RECORDS = async ({ commit, dispatch }) => {
 export const ADD_RECORD = async ({ commit, dispatch }, payload) => {
   try {
     dispatch(baseActions.START_FETCH);
-    const data = await PatientsProvider.create(payload);
+    const data = await RecordsService.create(payload);
 
     commit(mutations.ADD_ITEM, data);
   } catch (err) {
@@ -46,7 +46,7 @@ export const ADD_RECORD = async ({ commit, dispatch }, payload) => {
 export const EDIT_RECORD = async ({ commit, dispatch }, payload) => {
   try {
     dispatch(baseActions.START_FETCH);
-    const data = await PatientsProvider.update(payload);
+    const data = await RecordsService.update(payload);
 
     if (!data) {
       throw new Error('Item does not exist');
