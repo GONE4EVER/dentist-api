@@ -176,7 +176,7 @@ export default {
         rules: [
           NOT_EMPTY(ERROR_BASE_TEXT),
           (v) => this.doctorItems.some(
-            ({ text }) => v?.text && text.includes(v.text),
+            ({ text }) => text.includes(v?.text),
           ) || DOCTOR_MISSING_ERROR,
         ],
         availability: [],
@@ -196,7 +196,7 @@ export default {
         rules: [
           NOT_EMPTY(ERROR_BASE_TEXT),
           (v) => this.patientItems.some(
-            ({ text }) => v?.text && text.includes(v.text),
+            ({ text }) => text.includes(v?.text),
           ) || PATIENT_MISSING_ERROR,
         ],
       },
