@@ -148,15 +148,13 @@ import formatters from 'utils/formatters';
 
 
 const ERROR_BASE_TEXT = 'Required';
+const PATIENT_MISSING_ERROR = 'No matching patient found';
+const DOCTOR_MISSING_ERROR = 'No matching doctor found';
 const FORM_IS_NOT_EMPTY_ERROR = 'Form is not empty';
 
 const NOTES_INVALID = 'Too many symbols';
 
 const NOT_EMPTY = (errorText) => (v) => !!v || errorText;
-const BASE_CONFIG = {
-  value: null,
-  rules: [ NOT_EMPTY(ERROR_BASE_TEXT) ],
-};
 
 
 export default {
@@ -170,34 +168,44 @@ export default {
       required: true,
     },
   },
-  data: () => ({
-    datePicker: false,
-    doctor: {
-      ...BASE_CONFIG,
-      availability: [],
-    },
-    error: '',
-    errorTimeout: 3000,
-    formattedDate: null,
-    minDate: formatters.isoFormat(formatters.shortDate)(new Date()),
-    notes: {
-      value: null,
-      rules: [
-        (v) => {
-          if (!v) {
-            return true;
-          }
-
-          return v.length <= 256 || NOTES_INVALID;
-        },
-      ],
-    },
-    patient: { ...BASE_CONFIG },
-    pickedDate: null,
-    pickedTime: null,
-    timePicker: false,
-    valid: true,
-  }),
+  data() {
+    return {
+      datePicker: false,
+      doctor: {
+        value: null,
+        rules: [
+          NOT_EMPTY(ERROR_BASE_TEXT),
+          (v) => this.doctorItems.some(
+            ({ text }) => v?.text && text.includes(v.text),
+          ) || DOCTOR_MISSING_ERROR,
+        ],
+        availability: [],
+      },
+      error: '',
+      errorTimeout: 3000,
+      formattedDate: null,
+      minDate: formatters.isoFormat(formatters.shortDate)(new Date()),
+      notes: {
+        value: null,
+        rules: [
+          (v) => !v || v.length <= 256 || NOTES_INVALID,
+        ],
+      },
+      patient: {
+        value: null,
+        rules: [
+          NOT_EMPTY(ERROR_BASE_TEXT),
+          (v) => this.patientItems.some(
+            ({ text }) => v?.text && text.includes(v.text),
+          ) || PATIENT_MISSING_ERROR,
+        ],
+      },
+      pickedDate: null,
+      pickedTime: null,
+      timePicker: false,
+      valid: true,
+    };
+  },
   computed: {
     ...mapGetters({
       doctorsList: doctors.getters.GET_LIST,
