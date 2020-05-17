@@ -1,0 +1,33 @@
+{
+  "name": "authentication",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --inspect ./src/",
+    "dev": "node --inspect ./src/",
+    "id_provider": "nodemon ./identityProvider/",
+    "postinstall": "link-module-alias"
+  },
+  "_moduleAliases": {
+    "@/": "./src/"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "16.1.8",
+    "express": "^4.17.1",
+    "http-status": "1.4.2",
+    "mongodb": "^3.3.5",
+    "mongoose": "5.8.0"
+  },
+  "devDependencies": {
+    "colors": "1.4.0",
+    "dotenv": "8.2.0",
+    "eslint": "6.7.2",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-plugin-import": "2.18.2",
+    "link-module-alias": "1.2.0",
+    "nodemon": "2.0.1"
+  }
+}
