@@ -1,42 +1,21 @@
 <template>
-  <v-dialog
-    :value="isOpened"
-    persistent
-    width="800px"
-  >
+  <v-dialog :value="isOpened" persistent width="800px">
     <v-card>
       <v-overlay :value="fetching" absolute opacity="0.8">
-        <v-progress-circular
-          indeterminate
-          rotate
-          size="64"
-          width="5"
-          color="light-blue"
-        />
+        <v-progress-circular indeterminate rotate size="64" width="5" color="light-blue" />
       </v-overlay>
 
-      <v-card-title class="blue darken-2 white--text">
-        Add new patient card
-      </v-card-title>
+      <v-card-title class="blue darken-2 white--text">Add new patient card</v-card-title>
       <v-container>
         <v-card-text>
-          <v-form
-            ref="form"
-            v-model="valid"
-          >
-            <v-row
-              align="center"
-              class="mr-0"
-            >
+          <v-form ref="form" v-model="valid">
+            <v-row align="center" class="mr-0">
               <v-col cols="4">
-                <v-avatar
-                  size="100px"
-                  class="mx-12"
-                >
+                <v-avatar size="100px" class="mx-12">
                   <img
                     src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png"
                     alt="profile pic"
-                  >
+                  />
                 </v-avatar>
               </v-col>
 
@@ -57,7 +36,6 @@
                   required
                 ></v-text-field>
               </v-col>
-
             </v-row>
 
             <v-text-field
@@ -120,35 +98,16 @@
               label="Notes"
               outlined
             />
-
           </v-form>
         </v-card-text>
 
         <v-card-actions>
-          <v-btn
-            @click="cancel"
-            color="error"
-            text
-          >
-            Cancel
-          </v-btn>
+          <v-btn @click="cancel" color="error" text>Cancel</v-btn>
           <v-spacer />
 
-          <v-btn
-            color="primary"
-            class="mr-4"
-            @click="reset"
-          >
-            Reset
-          </v-btn>
+          <v-btn color="primary" class="mr-4" @click="reset">Reset</v-btn>
 
-          <v-btn
-            @click="submit"
-            :disabled="!valid"
-            color="success"
-          >
-            Submit
-          </v-btn>
+          <v-btn @click="submit" :disabled="!valid" color="success">Submit</v-btn>
         </v-card-actions>
       </v-container>
     </v-card>
@@ -160,7 +119,6 @@
       buttonText="Close anyway"
       color="error"
     />
-
   </v-dialog>
 </template>
 
@@ -180,13 +138,13 @@ const NOTES_INVALID = 'Too many symbols';
 const PHONE_INVALID = 'Invalid Number';
 const PHONE_REQUIRED = 'Phone number required';
 
+const EMAIN_REGEXP = /.+@.+\..+/;
 
 const NOT_EMPTY = (errorText) => (v) => !!v || errorText;
 const BASE_CONFIG = {
   value: null,
   rules: [ NOT_EMPTY(ERROR_BASE_TEXT) ],
 };
-
 
 export default {
   props: {
@@ -200,10 +158,7 @@ export default {
     company: { ...BASE_CONFIG },
     email: {
       value: null,
-      rules: [
-        NOT_EMPTY(ERROR_BASE_TEXT),
-        (v) => /.+@.+\..+/.test(v) || EMAIL_INVALID,
-      ],
+      rules: [ NOT_EMPTY(ERROR_BASE_TEXT), (v) => EMAIN_REGEXP.test(v) || EMAIL_INVALID ],
     },
     error: '',
     errorTimeout: 3000,
@@ -211,10 +166,7 @@ export default {
     name: {
       firstName: null,
       lastName: null,
-      rules: [
-        NOT_EMPTY(ERROR_BASE_TEXT),
-        (v) => (v && v.length <= 12) || NAME_INVALID,
-      ],
+      rules: [ NOT_EMPTY(ERROR_BASE_TEXT), (v) => (v && v.length <= 12) || NAME_INVALID ],
     },
     notes: {
       value: null,
@@ -243,9 +195,7 @@ export default {
     phoneNumber() {
       const { prefix, value } = this.phone;
 
-      return value
-        ? `${prefix}${value}`
-        : value;
+      return value ? `${prefix}${value}` : value;
     },
     ...mapGetters({
       errorState: getters.GET_ERROR_STATE,
@@ -280,9 +230,7 @@ export default {
       };
     },
     checkIfEmpty() {
-      return Object
-        .values(this.getFormData())
-        .every((v) => !v);
+      return Object.values(this.getFormData()).every((v) => !v);
     },
     cancel() {
       const isEmpty = this.checkIfEmpty();
@@ -309,13 +257,13 @@ export default {
     },
     error(value) {
       if (value) {
-        setTimeout(() => { this.error = ''; }, this.errorTimeout);
+        setTimeout(() => {
+          this.error = '';
+        }, this.errorTimeout);
       }
     },
   },
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

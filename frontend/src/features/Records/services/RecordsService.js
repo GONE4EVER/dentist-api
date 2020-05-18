@@ -1,8 +1,7 @@
-import Record from 'entities/Record.entity';
+import axiosInstance from 'utils/axios';
 
-// temporary
-import emitFetch from 'temp/emitFetch';
-import fakeBackend from 'temp/fakeBackend';
+import Record from 'entities/Record.entity';
+import Doctor from 'entities/Doctor.entity';
 
 
 /**
@@ -10,30 +9,43 @@ import fakeBackend from 'temp/fakeBackend';
  * TODO: replace date creating
 */
 export default {
-  getAll: async () => emitFetch(
-    () => {
-      const result = fakeBackend.getRecords();
+  getAll: async () => {
+    // const result = fakeBackend.getRecords();
+    const { data } = await axiosInstance.get('api/records');
 
-      return result.map((r) => new Record(r));
-    },
-    '' /* 'Data loading error' */,
-  ),
-  create: async (payload) => emitFetch(
-    () => {
-      const result = fakeBackend.createRecord(payload);
+    return data.map(({ _id, ...rest }) => new Record({
+      ...rest,
+      id: _id,
+    }));
+  },
+  create: async (payload) => {
+    const { data } = await axiosInstance
+      .post('api/records', { record: payload });
 
-      return new Record(result);
-    },
-    '' /* 'Data loading error' */,
-  ),
-  update: async (payload) => emitFetch(
-    () => {
-      const updatedItem = fakeBackend.updateRecord(payload);
+    const { _id, ...rest } = data.record;
 
-      return updatedItem
-        ? new Record(updatedItem)
-        : null;
-    },
-    '' /* 'Data loading error' */,
-  ),
+    const { _id: doctorId, ...doctorData } = data.doctor;
+
+    return {
+      doctor: new Doctor({
+        ...doctorData,
+        id: doctorId,
+      }),
+      record: new Record({
+        ...rest,
+        id: _id,
+      }),
+    };
+  },
+  update: async (payload) => {
+    const { data } = await axiosInstance
+      .patch('api/records', { record: payload });
+
+    const { _id } = data;
+
+    return new Record({
+      ...data,
+      id: _id,
+    });
+  },
 };

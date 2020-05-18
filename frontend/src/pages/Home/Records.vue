@@ -16,8 +16,8 @@
     <new-record-card v-if="dialogOpened" :isOpened.sync="dialogOpened"/>
 
     <base-snackbar
-      :visible="Boolean(patientsError || recordsError)"
-      :text="recordsError || patientsError || 'null'"
+      :visible="Boolean(doctorsError || patientsError || recordsError)"
+      :text="recordsError || patientsError || doctorsError || 'null'"
       color="error"
     />
   </v-card>
@@ -29,6 +29,7 @@ import { mapActions, mapGetters } from 'vuex';
 import NewRecordCard from 'features/Records/components/NewRecordCard.vue';
 import RecordsTable from 'features/Records/components/RecordsTable.vue';
 
+import * as doctors from 'features/Doctors/constants/store';
 import * as patients from 'features/Patients/constants/store';
 import * as records from 'features/Records/constants/store';
 
@@ -44,6 +45,7 @@ export default {
   computed: {
     ...mapGetters({
       patientsError: patients.getters.GET_ERROR_STATE,
+      doctorsError: doctors.getters.GET_ERROR_STATE,
       recordsList: records.getters.GET_LIST,
       recordsError: records.getters.GET_ERROR_STATE,
     }),

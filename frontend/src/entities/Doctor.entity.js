@@ -13,11 +13,15 @@ export default class Doctor extends Person {
     super(rest);
 
     this.availability = availability.map(
-      (date) => ({
-        date: formatters.shortDate.format(date),
-        time: formatters.time.format(date),
-        isoDate: formatters.isoFormat(formatters.shortDate)(date),
-      }),
+      (baseDate) => {
+        const date = new Date(baseDate);
+
+        return {
+          date: formatters.shortDate.format(date),
+          time: formatters.time.format(date),
+          isoDate: formatters.isoFormat(formatters.shortDate)(date),
+        };
+      },
     );
   }
 }

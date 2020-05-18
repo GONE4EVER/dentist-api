@@ -9,7 +9,7 @@ import formatters from 'utils/formatters';
 export default class Record {
   constructor(props) {
     const {
-      date,
+      date: baseDate,
       doctor,
       patient,
       notes,
@@ -18,6 +18,7 @@ export default class Record {
 
     this.id = id;
 
+    const date = new Date(baseDate);
     this.date = formatters.shortDate.format(date);
     this.time = formatters.time.format(date);
 

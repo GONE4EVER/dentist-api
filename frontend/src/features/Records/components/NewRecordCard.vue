@@ -209,11 +209,11 @@ export default {
   computed: {
     ...mapGetters({
       doctorsList: doctors.getters.GET_LIST,
-      doctorsError: doctors.getters.GET_ERROR_STATE,
+      doctorsError: doctors.getters.GET_ERROR_STATE, // TODO:
       doctorsFetching: doctors.getters.GET_FETCHING_STATE,
 
       patientsList: patients.getters.GET_LIST,
-      patientsError: patients.getters.GET_ERROR_STATE,
+      patientsError: patients.getters.GET_ERROR_STATE, // TODO:
       patientsFetching: patients.getters.GET_FETCHING_STATE,
 
       recordsError: records.getters.GET_ERROR_STATE,

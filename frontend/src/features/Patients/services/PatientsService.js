@@ -1,38 +1,35 @@
-import Patient from 'entities/Patient.entity';
+import axiosInstance from 'utils/axios';
 
-// temporary
-import emitFetch from 'temp/emitFetch';
-import fakeBackend from 'temp/fakeBackend';
+import Patient from 'entities/Patient.entity';
 
 
 /**
  * TODO: error handling
+ * TODO: put routes to constants
 */
 export default {
-  getAll: async () => emitFetch(
-    () => {
-      const data = fakeBackend.getPatients();
+  getAll: async () => {
+    const { data } = await axiosInstance.get('/api/patients');
 
-      return data.map((dataItem) => new Patient(dataItem));
-    },
-    // 'Data loading error',
-  ),
-  create: async (payload) => emitFetch(
-    () => {
-      const data = fakeBackend.createPatient(payload);
+    return data.map(({ _id, ...rest }) => new Patient({
+      ...rest,
+      id: _id,
+    }));
+  },
+  create: async (payload) => {
+    const { data: { _id } } = await axiosInstance
+      .post('/api/patients', { patient: payload });
 
-      return new Patient(data);
-    },
-    // 'Data loading error',
-  ),
-  update: async (payload) => emitFetch(
-    () => {
-      const data = fakeBackend.updatePatient(payload);
+    return new Patient({ ...payload, id: _id });
+  },
+  update: async (payload) => {
+    const { data } = await axiosInstance
+      .patch('/api/patients', { patient: payload });
 
-      return data
-        ? new Patient(data)
-        : null;
-    },
-    // 'Loading error occured',
-  ),
+    if (!data) { return null; }
+
+    const { _id, ...rest } = data;
+
+    return new Patient({ ...rest, id: _id });
+  },
 };

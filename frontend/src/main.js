@@ -9,7 +9,6 @@ import store from './store';
 
 import './registerComponents';
 
-
 Vue.use(Vuetify);
 Vue.config.productionTip = false;
 

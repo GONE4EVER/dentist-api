@@ -2,6 +2,7 @@ import RecordsService from 'features/Records/services/RecordsService';
 
 import baseActions from 'features/Records/constants/actions';
 import { mutations } from 'features/Records/constants/store';
+// import { mutations as doctorsMutations } from 'features/Doctors/constants/store';
 
 
 /**
@@ -22,7 +23,6 @@ export const GET_RECORDS = async ({ commit, dispatch }) => {
     const data = await RecordsService.getAll();
 
     commit(mutations.SET_ITEMS_LIST, data);
-    commit(mutations.SET_ERROR_STATE, null);
   } catch (err) {
     dispatch(baseActions.HANDLE_ERROR, err);
   } finally {
@@ -33,9 +33,9 @@ export const GET_RECORDS = async ({ commit, dispatch }) => {
 export const ADD_RECORD = async ({ commit, dispatch }, payload) => {
   try {
     dispatch(baseActions.START_FETCH);
-    const data = await RecordsService.create(payload);
+    const { record, doctor } = await RecordsService.create(payload);
 
-    commit(mutations.ADD_ITEM, data);
+    commit(mutations.ADD_ITEM, record);
   } catch (err) {
     dispatch(baseActions.HANDLE_ERROR, err);
   } finally {
