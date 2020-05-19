@@ -7,9 +7,10 @@
     <v-list flat>
       <v-list-item
         v-for="{text, icon, routeName} in items"
-        link
-        :key="text"
         @click="navigate(routeName)"
+        :key="text"
+        class="nav-bar__item"
+        link
       >
         <v-list-item-action>
           <v-icon>{{ icon }}</v-icon>
@@ -72,5 +73,7 @@ export default {
 </script>
 
 <style scoped>
-
+.nav-bar__item {
+  cursor: pointer;
+}
 </style>

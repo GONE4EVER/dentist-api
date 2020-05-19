@@ -12,7 +12,9 @@ const routes = {
   name: constants.ROOT_NAME,
   component: Home,
 
-  authRequred: true,
+  meta: {
+    authRequired: true,
+  },
 
   children: [
     {
@@ -26,9 +28,6 @@ const routes = {
       component: () => import('pages/Home/Records.vue'),
     },
   ],
-  beforeEnter: (to, from, next) => {
-    next();
-  },
 };
 
 

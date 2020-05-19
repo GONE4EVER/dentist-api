@@ -1,3 +1,4 @@
 export default {
   SET_AUTH_STATUS: 'SET_AUTH_STATUS',
+  SET_ERROR_STATE: 'SET_ERROR_STATE',
 };

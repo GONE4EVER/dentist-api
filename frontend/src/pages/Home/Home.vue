@@ -12,8 +12,6 @@
 import AppHeader from 'features/Navigation/components/AppHeader.vue';
 import NavigationBar from 'features/Navigation/components/NavigationBar.vue';
 
-// import { ROOT_NAME, PATIENTS_LIST_NAME } from 'pages/Home/routes/constants';
-
 
 export default {
   components: {
