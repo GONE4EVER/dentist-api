@@ -6,11 +6,12 @@ import doctors from 'features/Doctors/store';
 import patients from 'features/Patients/store';
 import records from 'features/Records/store';
 
+import authMiddleware from 'store/middlewares/auth.middleware';
+
 
 Vue.use(Vuex);
 
-
-export default new Vuex.Store({
+const store = new Vuex.Store({
   modules: {
     auth,
     doctors,
@@ -18,3 +19,8 @@ export default new Vuex.Store({
     records,
   },
 });
+
+store.subscribeAction({ before: authMiddleware });
+
+
+export default store;
