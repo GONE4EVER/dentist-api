@@ -19,7 +19,7 @@ const request = (callback, errorMessage = '', timeout = 1000) => new Promise(
 export default {
   authenticate(payload) {
     if (!payload) {
-      return localStorage.getItem('auth');
+      return Boolean(localStorage.getItem('auth')); // #2
     }
 
     const { login, password } = payload;
@@ -35,6 +35,6 @@ export default {
     return authResult;
   },
   logOut() {
-    localStorage.clear();
+    localStorage.clear(); // #2
   },
 };
