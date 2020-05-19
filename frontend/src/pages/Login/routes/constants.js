@@ -1,8 +1,8 @@
-const name = 'login';
-const path = '/login';
+const LOGIN_ROUTE_NAME = 'login';
+const LOGIN_ROUTE_PATH = '/login';
 
 
 export {
-  name,
-  path,
+  LOGIN_ROUTE_NAME,
+  LOGIN_ROUTE_PATH,
 };
