@@ -2,7 +2,10 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import store from 'store';
-import { getters as authGetters } from 'features/Auth/store/constants';
+import {
+  actions as authActions,
+  getters as authGetters,
+} from 'features/Auth/store/constants';
 
 import { LOGIN_ROUTE_NAME } from 'pages/Login/routes/constants';
 
@@ -17,7 +20,9 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = store.getters[authGetters.GET_AUTH_STATE];
+  store.dispatch(authActions.AUTHENTICATE);
+
+  const isAuthenticated = store.getters[authGetters.GET_AUTH_STATUS];
   const isRouteProtected = to.matched.some((route) => route.meta?.authRequired);
 
   if (isRouteProtected && !isAuthenticated) {
