@@ -26,10 +26,14 @@ module.exports = async (req, res) => {
     .some((d) => moment(formattedDate).isSame(d));
 
   if (isRecordDateValid) {
-    const doctor = await Doctor.findByIdAndUpdate(doctorId, { // #2 request
-      availability: doctorData.availability
-        .filter((d) => !moment(formattedDate).isSame(d)),
-    });
+    const doctor = await Doctor.findByIdAndUpdate( // #2 request
+      doctorId,
+      {
+        availability: doctorData.availability // replace with $pull & $push
+          .filter((d) => !moment(formattedDate).isSame(d)),
+      },
+      { new: true },
+    );
 
     const record = await Record // #3 request
       .create({
