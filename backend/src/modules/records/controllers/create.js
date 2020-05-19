@@ -7,7 +7,7 @@ const Record = require('../models/record');
 /**
  * TODO: error handling
  * TODO: patient ref update
- * TODO: solve too-many-requests problem
+ * TODO: solve too-many-db-requests problem
  */
 module.exports = async (req, res) => {
   const { record: recordData } = req.body;
