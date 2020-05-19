@@ -4,15 +4,15 @@
     <app-header :handleMenuClick="toggleNavBar" />
     <v-content>
       <router-view />
-
     </v-content>
   </v-app>
 </template>
 
 <script>
-
 import AppHeader from 'features/Navigation/components/AppHeader.vue';
 import NavigationBar from 'features/Navigation/components/NavigationBar.vue';
+
+// import { ROOT_NAME, PATIENTS_LIST_NAME } from 'pages/Home/routes/constants';
 
 
 export default {
@@ -23,17 +23,11 @@ export default {
   data: () => ({
     navBar: null,
   }),
-  beforeRouteUpdate(to, from, next) {
-    this.navBar = null;
-    next();
-  },
   methods: {
-
     toggleNavBar() {
       this.navBar = !this.navBar;
     },
   },
-
 };
 </script>
 

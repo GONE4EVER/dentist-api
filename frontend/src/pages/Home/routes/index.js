@@ -11,6 +11,9 @@ const routes = {
   path: constants.ROOT_PATH,
   name: constants.ROOT_NAME,
   component: Home,
+
+  authRequred: true,
+
   children: [
     {
       path: constants.PATIENTS_LIST_PATH,

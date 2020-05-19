@@ -58,14 +58,13 @@
 
 <script>
 export default {
-  inject: [ 'authorize', 'getAuthStatus', 'logOut' ],
   data: () => ({
     login: null,
     password: null,
   }),
   methods: {
     logIn() {
-      this.authorize(this.login, this.password);
+
     },
   },
 };

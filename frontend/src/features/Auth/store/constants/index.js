@@ -1,12 +1,12 @@
 import setNamespace from 'utils/getNamespacedNames';
 
-import actions from 'features/Records/store/constants/actions';
-import getters from 'features/Records/store/constants/getters';
-import mutations from 'features/Records/store/constants/mutations';
+import actions from 'features/Auth/store/constants/actions';
+import getters from 'features/Auth/store/constants/getters';
+import mutations from 'features/Auth/store/constants/mutations';
 
 
-const RECORDS_MODULE_PREFIX = 'records';
-const getNamespacedItems = setNamespace(RECORDS_MODULE_PREFIX);
+const AUTH_MODULE_PREFIX = 'auth';
+const getNamespacedItems = setNamespace(AUTH_MODULE_PREFIX);
 
 const namespacedActions = getNamespacedItems(actions);
 const namespacedGetters = getNamespacedItems(getters);

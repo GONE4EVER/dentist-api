@@ -1,20 +1,20 @@
 import setNamespace from 'utils/getNamespacedNames';
 
-import baseActions from 'features/Patients/store/constants/actions';
-import baseGetters from 'features/Patients/store/constants/getters';
-import baseMutations from 'features/Patients/store/constants/mutations';
+import actions from 'features/Patients/store/constants/actions';
+import getters from 'features/Patients/store/constants/getters';
+import mutations from 'features/Patients/store/constants/mutations';
 
 
 const PATIENTS_MODULE_PREFIX = 'patients';
 const getNamespacedItems = setNamespace(PATIENTS_MODULE_PREFIX);
 
-const actions = getNamespacedItems(baseActions);
-const getters = getNamespacedItems(baseGetters);
-const mutations = getNamespacedItems(baseMutations);
+const namespacedActions = getNamespacedItems(actions);
+const namespacedGetters = getNamespacedItems(getters);
+const namespacedMutations = getNamespacedItems(mutations);
 
 
 export {
-  actions,
-  getters,
-  mutations,
+  namespacedActions as actions,
+  namespacedGetters as getters,
+  namespacedMutations as mutations,
 };
