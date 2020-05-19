@@ -2,14 +2,11 @@ import axiosInstance from 'utils/axios';
 
 import Doctor from 'entities/Doctor.entity';
 
-// temporary
-import emitFetch from 'temp/emitFetch';
-import fakeBackend from 'temp/fakeBackend';
-
 
 /**
  * TODO: error handling
  * TODO: solve date issue
+ * TODO: update
 */
 export default {
   getAll: async () => {
@@ -21,7 +18,7 @@ export default {
       id: _id,
     }));
   },
-  update: async (payload) => emitFetch(
-    () => fakeBackend.updateDoctor(payload),
-  ),
+  /* update: async (payload) => {
+
+  } */
 };

@@ -10,7 +10,6 @@ import Doctor from 'entities/Doctor.entity';
 */
 export default {
   getAll: async () => {
-    // const result = fakeBackend.getRecords();
     const { data } = await axiosInstance.get('api/records');
 
     return data.map(({ _id, ...rest }) => new Record({
