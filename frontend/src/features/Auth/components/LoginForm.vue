@@ -15,7 +15,7 @@
       <v-card-text>
         <v-form>
           <v-text-field
-            v-model="login"
+            v-model="loginModel"
             :error-messages="authError"
             label="Login"
             name="login"
@@ -24,7 +24,7 @@
           ></v-text-field>
 
           <v-text-field
-            v-model="password"
+            v-model="passwordModel"
             :error-messages="authError"
             id="password"
             label="Password"
@@ -37,7 +37,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn
-          @click="tryLogin"
+          @click="handleLogin"
           class="col-3"
           color="primary"
         >Login</v-btn>
@@ -57,29 +57,27 @@ import {
 
 export default {
   data: () => ({
-    login: null,
-    password: null,
+    loginModel: null,
+    passwordModel: null,
   }),
-  mounted() {
-    this.authenticate();
-  },
   methods: {
     ...mapActions({
       authenticate: authActions.AUTHENTICATE,
+      logIn: authActions.LOG_IN,
     }),
-    tryLogin() {
+    handleLogin() {
       const {
-        authenticate,
-        login,
-        password,
+        logIn,
+        loginModel,
+        passwordModel,
       } = this;
 
-      authenticate({ login, password });
+      logIn({ login: loginModel, password: passwordModel });
     },
   },
   computed: {
     ...mapGetters({
-      authState: authGetters.GET_AUTH_STATE,
+      authState: authGetters.GET_AUTH_STATUS,
       authError: authGetters.GET_ERROR_STATE,
     }),
   },

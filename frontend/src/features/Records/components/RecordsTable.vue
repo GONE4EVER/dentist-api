@@ -45,7 +45,10 @@ import { mapActions, mapGetters } from 'vuex';
 
 import DetailsCard from 'components/DetailsCard.vue';
 
-import { actions, getters } from 'features/Records/store/constants';
+import {
+  actions as recordsActions,
+  getters as recordsGetters,
+} from 'features/Records/store/constants';
 
 
 export default {
@@ -95,9 +98,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getList: getters.GET_LIST,
-      getOne: getters.GET_ONE,
-      fetching: getters.GET_FETCHING_STATE,
+      getList: recordsGetters.GET_LIST,
+      getOne: recordsGetters.GET_ONE,
+      fetching: recordsGetters.GET_FETCHING_STATE,
     }),
     selectedRecord() {
       const { getOne, selectedRecordId } = this;
@@ -112,7 +115,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      editSelectedProfile: actions.EDIT_RECORD,
+      editSelectedProfile: recordsActions.EDIT_RECORD,
     }),
     setSelectedItem({ id }) {
       this.selectedRecordId = id;

@@ -29,9 +29,12 @@ import { mapActions, mapGetters } from 'vuex';
 import NewRecordCard from 'features/Records/components/NewRecordCard.vue';
 import RecordsTable from 'features/Records/components/RecordsTable.vue';
 
-import * as doctors from 'features/Doctors/store/constants';
-import * as patients from 'features/Patients/store/constants';
-import * as records from 'features/Records/store/constants';
+import { getters as doctorGetters } from 'features/Doctors/store/constants';
+import { getters as patientsGetters } from 'features/Patients/store/constants';
+import {
+  actions as recordsActions,
+  getters as recordsGetters,
+} from 'features/Records/store/constants';
 
 
 export default {
@@ -44,15 +47,15 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      patientsError: patients.getters.GET_ERROR_STATE,
-      doctorsError: doctors.getters.GET_ERROR_STATE,
-      recordsList: records.getters.GET_LIST,
-      recordsError: records.getters.GET_ERROR_STATE,
+      patientsError: patientsGetters.GET_ERROR_STATE,
+      doctorsError: doctorGetters.GET_ERROR_STATE,
+      recordsList: recordsGetters.GET_LIST,
+      recordsError: recordsGetters.GET_ERROR_STATE,
     }),
   },
   methods: {
     ...mapActions({
-      fetchRecords: records.actions.GET_RECORDS,
+      fetchRecords: recordsActions.GET_RECORDS,
     }),
   },
   created() {

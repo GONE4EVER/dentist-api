@@ -45,7 +45,10 @@ import { mapActions, mapGetters } from 'vuex';
 
 import DetailsCard from 'components/DetailsCard.vue';
 
-import { actions, getters } from 'features/Patients/store/constants';
+import {
+  actions as patientsActions,
+  getters as patientsGetters,
+} from 'features/Patients/store/constants';
 
 
 export default {
@@ -96,9 +99,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getList: getters.GET_LIST,
-      getOne: getters.GET_ONE,
-      fetching: getters.GET_FETCHING_STATE,
+      getList: patientsGetters.GET_LIST,
+      getOne: patientsGetters.GET_ONE,
+      fetching: patientsGetters.GET_FETCHING_STATE,
     }),
     selectedPatient() {
       const { getOne, selectedPatientId } = this;
@@ -117,7 +120,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      editSelectedProfile: actions.EDIT_PATIENT_PROFILE,
+      editSelectedProfile: patientsActions.EDIT_PATIENT_PROFILE,
     }),
     setSelectedItem({ id }) {
       this.selectedPatientId = id;

@@ -101,14 +101,14 @@
           </v-form>
         </v-card-text>
 
-        <v-card-actions>
+        <v-card-patientsActions>
           <v-btn @click="cancel" color="error" text>Cancel</v-btn>
           <v-spacer />
 
           <v-btn color="primary" class="mr-4" @click="reset">Reset</v-btn>
 
           <v-btn @click="submit" :disabled="!valid" color="success">Submit</v-btn>
-        </v-card-actions>
+        </v-card-patientsActions>
       </v-container>
     </v-card>
 
@@ -125,7 +125,11 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-import { actions, getters } from 'features/Patients/store/constants';
+import {
+  actions as patientsActions,
+  getters as patientsGetters,
+} from 'features/Patients/store/constants';
+
 
 const PHONE_PREFIX = '+375';
 
@@ -198,13 +202,13 @@ export default {
       return value ? `${prefix}${value}` : value;
     },
     ...mapGetters({
-      errorState: getters.GET_ERROR_STATE,
-      fetching: getters.GET_FETCHING_STATE,
+      errorState: patientsGetters.GET_ERROR_STATE,
+      fetching: patientsGetters.GET_FETCHING_STATE,
     }),
   },
   methods: {
     ...mapActions({
-      addPatient: actions.ADD_PATIENT,
+      addPatient: patientsActions.ADD_PATIENT,
     }),
     validate() {
       this.$refs.form.validate();

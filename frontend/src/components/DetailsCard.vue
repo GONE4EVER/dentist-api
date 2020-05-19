@@ -55,7 +55,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import { getters } from 'features/Patients/store/constants';
+import { getters as patientsGetters } from 'features/Patients/store/constants';
 
 
 const CARD_TEXT_PLACEHOLDER = 'No notes yet.';
@@ -119,7 +119,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      errorState: getters.GET_ERROR_STATE,
+      errorState: patientsGetters.GET_ERROR_STATE,
     }),
   },
   watch: {

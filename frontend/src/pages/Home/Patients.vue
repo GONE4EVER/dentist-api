@@ -29,7 +29,10 @@ import { mapActions, mapGetters } from 'vuex';
 import NewPatientCard from 'features/Patients/components/NewPatientCard.vue';
 import PatientsTable from 'features/Patients/components/PatientsTable.vue';
 
-import { actions, getters } from 'features/Patients/store/constants';
+import {
+  actions as patientsActions,
+  getters as patientsGetters,
+} from 'features/Patients/store/constants';
 
 
 export default {
@@ -42,13 +45,13 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      patientsList: getters.GET_LIST,
-      errorState: getters.GET_ERROR_STATE,
+      patientsList: patientsGetters.GET_LIST,
+      errorState: patientsGetters.GET_ERROR_STATE,
     }),
   },
   methods: {
     ...mapActions({
-      fetchPatients: actions.GET_PATIENTS,
+      fetchPatients: patientsActions.GET_PATIENTS,
     }),
   },
   created() {
