@@ -10,7 +10,7 @@ const getNamespacedItems = setNamespace(RECORDS_MODULE_PREFIX);
 
 const actions = getNamespacedItems(baseActions);
 const getters = getNamespacedItems(baseGetters);
-const mutations = baseMutations;
+const mutations = getNamespacedItems(baseMutations);
 
 
 export {

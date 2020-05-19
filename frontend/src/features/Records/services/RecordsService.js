@@ -6,7 +6,7 @@ import Doctor from 'entities/Doctor.entity';
 
 /**
  * TODO: error handling
- * TODO: replace date creating
+ * TODO: solve _id reassigning
 */
 export default {
   getAll: async () => {

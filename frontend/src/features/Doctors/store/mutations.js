@@ -13,6 +13,8 @@ export const SET_ITEMS_LIST = (state, payload) => {
 export const EDIT_ITEM = (state, payload) => {
   const { id } = payload;
 
+  debugger;
+
   state.list = state.list
     .map((item) => (item.id === id ? payload : item));
 };

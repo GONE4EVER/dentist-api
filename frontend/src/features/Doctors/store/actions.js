@@ -1,15 +1,16 @@
 import DoctorsService from 'features/Doctors/services/DoctorsService';
 
 import baseActions from 'features/Doctors/constants/actions';
-import { mutations } from 'features/Doctors/constants/store';
+import baseMutations from 'features/Records/constants/mutations';
+
 
 export const START_FETCH = ({ commit }) => {
-  commit(mutations.SET_ERROR_STATE, null);
-  commit(mutations.SET_FETCH_STATUS, true);
+  commit(baseMutations.SET_ERROR_STATE, null);
+  commit(baseMutations.SET_FETCH_STATUS, true);
 };
 
 export const FINISH_FETCH = ({ commit }) => {
-  commit(mutations.SET_FETCH_STATUS, false);
+  commit(baseMutations.SET_FETCH_STATUS, false);
 };
 
 export const GET_DOCTORS = async ({ commit, dispatch }) => {
@@ -17,7 +18,7 @@ export const GET_DOCTORS = async ({ commit, dispatch }) => {
     dispatch(baseActions.START_FETCH);
     const data = await DoctorsService.getAll();
 
-    commit(mutations.SET_ITEMS_LIST, data);
+    commit(baseMutations.SET_ITEMS_LIST, data);
   } catch (err) {
     dispatch(baseActions.HANDLE_ERROR, err);
   } finally {
@@ -30,7 +31,7 @@ export const EDIT_DOCTOR_PROFILE = async ({ commit, dispatch }, payload) => {
     dispatch(baseActions.START_FETCH);
     const data = await DoctorsService.update(payload);
 
-    commit(mutations.EDIT_ITEM, data);
+    commit(baseMutations.EDIT_ITEM, data);
   } catch (err) {
     dispatch(baseActions.HANDLE_ERROR, err);
   } finally {
@@ -39,5 +40,5 @@ export const EDIT_DOCTOR_PROFILE = async ({ commit, dispatch }, payload) => {
 };
 
 export const HANDLE_ERROR = (context, errorPayload) => {
-  context.commit(mutations.SET_ERROR_STATE, errorPayload.message);
+  context.commit(baseMutations.SET_ERROR_STATE, errorPayload.message);
 };
