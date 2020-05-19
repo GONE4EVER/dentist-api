@@ -45,7 +45,7 @@ import { mapActions, mapGetters } from 'vuex';
 
 import DetailsCard from 'components/DetailsCard.vue';
 
-import { actions, getters } from 'features/Records/constants/store';
+import { actions, getters } from 'features/Records/store/constants';
 
 
 export default {

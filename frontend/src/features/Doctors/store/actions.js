@@ -1,7 +1,7 @@
 import DoctorsService from 'features/Doctors/services/DoctorsService';
 
-import baseActions from 'features/Doctors/constants/actions';
-import baseMutations from 'features/Records/constants/mutations';
+import baseActions from 'features/Doctors/store/constants/actions';
+import baseMutations from 'features/Records/store/constants/mutations';
 
 
 export const START_FETCH = ({ commit }) => {

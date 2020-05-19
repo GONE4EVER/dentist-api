@@ -1,8 +1,8 @@
 import setNamespace from 'utils/getNamespacedNames';
 
-import baseActions from 'features/Records/constants/actions';
-import baseGetters from 'features/Records/constants/getters';
-import baseMutations from 'features/Records/constants/mutations';
+import baseActions from 'features/Records/store/constants/actions';
+import baseGetters from 'features/Records/store/constants/getters';
+import baseMutations from 'features/Records/store/constants/mutations';
 
 
 const RECORDS_MODULE_PREFIX = 'records';

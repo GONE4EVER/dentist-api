@@ -1,7 +1,7 @@
 import PatientsProvider from 'features/Patients/services/PatientsService';
 
-import baseActions from 'features/Patients/constants/actions';
-import baseMutations from 'features/Patients/constants/mutations';
+import baseActions from 'features/Patients/store/constants/actions';
+import baseMutations from 'features/Patients/store/constants/mutations';
 
 /**
  * TODO: add custom error constructor

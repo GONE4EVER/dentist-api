@@ -140,9 +140,9 @@ import { mapActions, mapGetters } from 'vuex';
 import DatePicker from 'components/Datepicker.vue';
 import TimePicker from 'components/TimePicker.vue';
 
-import * as doctors from 'features/Doctors/constants/store';
-import * as patients from 'features/Patients/constants/store';
-import * as records from 'features/Records/constants/store';
+import * as doctors from 'features/Doctors/store/constants';
+import * as patients from 'features/Patients/store/constants';
+import * as records from 'features/Records/store/constants';
 
 import formatters from 'utils/formatters';
 

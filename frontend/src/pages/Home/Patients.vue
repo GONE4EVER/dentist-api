@@ -29,7 +29,7 @@ import { mapActions, mapGetters } from 'vuex';
 import NewPatientCard from 'features/Patients/components/NewPatientCard.vue';
 import PatientsTable from 'features/Patients/components/PatientsTable.vue';
 
-import { actions, getters } from 'features/Patients/constants/store';
+import { actions, getters } from 'features/Patients/store/constants';
 
 
 export default {

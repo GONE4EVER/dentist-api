@@ -55,7 +55,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import { getters } from 'features/Patients/constants/store';
+import { getters } from 'features/Patients/store/constants';
 
 
 const CARD_TEXT_PLACEHOLDER = 'No notes yet.';

@@ -125,7 +125,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-import { actions, getters } from 'features/Patients/constants/store';
+import { actions, getters } from 'features/Patients/store/constants';
 
 const PHONE_PREFIX = '+375';
 

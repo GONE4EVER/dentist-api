@@ -1,4 +1,4 @@
-export const GET_LIST = (state/* , getters */) => (/* search, date */) => state.list;
+export const GET_LIST = (state) => (/* search, date */) => state.list;
 
 export const GET_FETCHING_STATE = (state) => state.fetching;
 

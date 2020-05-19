@@ -15,14 +15,12 @@ export default {
     return data.map((p) => new Patient(p));
   },
   create: async (payload) => {
-    const { data: { _id } } = await axiosInstance
-      .post(PATIENTS_API_URI, { patient: payload });
+    const { data: { _id } } = await axiosInstance.post(PATIENTS_API_URI, { patient: payload });
 
     return new Patient({ ...payload, _id });
   },
   update: async (payload) => {
-    const { data } = await axiosInstance
-      .patch(PATIENTS_API_URI, { patient: payload });
+    const { data } = await axiosInstance.patch(PATIENTS_API_URI, { patient: payload });
 
     if (!data) { return null; }
 
