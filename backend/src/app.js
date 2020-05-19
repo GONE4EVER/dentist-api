@@ -14,8 +14,9 @@ mongoose.connect(
     useFindAndModify: false,
   },
   // eslint-disable-next-line
-  () => console.log('Mongo connected'.magenta)
+  (err) => err ? console.error(`${err}`.red) : console.log('Mongo connected'.magenta)
 );
+
 
 const app = express();
 
