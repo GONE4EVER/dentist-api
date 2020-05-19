@@ -3,48 +3,40 @@ import axiosInstance from 'utils/axios';
 import Record from 'entities/Record.entity';
 import Doctor from 'entities/Doctor.entity';
 
+import { RECORDS_API_URI } from 'constants/api';
+
 
 /**
  * TODO: error handling
- * TODO: solve _id reassigning
 */
 export default {
   getAll: async () => {
-    const { data } = await axiosInstance.get('api/records');
+    const { data } = await axiosInstance.get(RECORDS_API_URI);
 
-    return data.map(({ _id, ...rest }) => new Record({
-      ...rest,
-      id: _id,
-    }));
+    return data.map((r) => new Record(r));
   },
   create: async (payload) => {
     const { data } = await axiosInstance
-      .post('api/records', { record: payload });
+      .post(RECORDS_API_URI, { record: payload });
 
-    const { _id, ...rest } = data.record;
+    if (!data) { return null; }
 
-    const { _id: doctorId, ...doctorData } = data.doctor;
+    const { record, doctor } = data;
 
     return {
-      doctor: new Doctor({
-        ...doctorData,
-        id: doctorId,
-      }),
-      record: new Record({
-        ...rest,
-        id: _id,
-      }),
+      doctor: new Doctor(doctor),
+      record: new Record(record),
     };
   },
   update: async (payload) => {
     const { data } = await axiosInstance
-      .patch('api/records', { record: payload });
+      .patch(RECORDS_API_URI, { record: payload });
 
     const { _id } = data;
 
     return new Record({
       ...data,
-      id: _id,
+      _id,
     });
   },
 };

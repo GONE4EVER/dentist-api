@@ -13,10 +13,10 @@ export default class Record {
       doctor,
       patient,
       notes,
-      id,
+      _id,
     } = props;
 
-    this.id = id;
+    this.id = _id;
 
     const date = new Date(baseDate);
     this.date = formatters.shortDate.format(date);

@@ -7,10 +7,10 @@ class Person {
       firstName,
       lastName,
       phoneNumber,
-      id,
+      _id,
     } = props;
 
-    this.id = id;
+    this.id = _id;
     this.firstName = firstName;
     this.lastName = lastName;
 

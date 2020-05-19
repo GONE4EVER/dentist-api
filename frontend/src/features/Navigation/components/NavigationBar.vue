@@ -30,9 +30,6 @@ import {
 } from 'pages/Home/routes/constants';
 
 
-/**
- * TODO: replace items with Route.entity objects
-*/
 export default {
   data: () => ({
     active: 'patientsList',
