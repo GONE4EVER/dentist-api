@@ -101,14 +101,14 @@
           </v-form>
         </v-card-text>
 
-        <v-card-patientsActions>
+        <v-card-actions>
           <v-btn @click="cancel" color="error" text>Cancel</v-btn>
           <v-spacer />
 
           <v-btn color="primary" class="mr-4" @click="reset">Reset</v-btn>
 
           <v-btn @click="submit" :disabled="!valid" color="success">Submit</v-btn>
-        </v-card-patientsActions>
+        </v-card-actions>
       </v-container>
     </v-card>
 
