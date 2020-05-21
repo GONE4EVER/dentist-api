@@ -26,6 +26,12 @@ module.exports = async (req, res) => {
     .some((d) => moment(formattedDate).isSame(d));
 
   if (isRecordDateValid) {
+    const record = await Record // #3 request
+      .create({
+        ...recordData,
+        date: formattedDate,
+      });
+
     const doctor = await Doctor.findByIdAndUpdate( // #2 request
       doctorId,
       {
@@ -34,12 +40,6 @@ module.exports = async (req, res) => {
       },
       { new: true },
     );
-
-    const record = await Record // #3 request
-      .create({
-        ...recordData,
-        date: formattedDate,
-      });
 
     const result = await Record.populate(record, [ // #4 request
       { path: 'doctor', model: Doctor },
