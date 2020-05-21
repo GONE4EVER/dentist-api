@@ -7,9 +7,9 @@ module.exports = async (req, res) => {
   const { patient } = req.body;
 
   const data = new Patient(patient);
-  const { _id: id } = await data.save();
+  const { _id } = await data.save();
 
   res
     .status(201)
-    .send({ id });
+    .send({ _id });
 };
