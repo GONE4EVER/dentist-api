@@ -1,0 +1,14 @@
+FROM node:current-slim
+
+WORKDIR /usr/src/dentist-api
+
+ENV PORT 8080
+ENV HOST 0.0.0.0
+
+COPY package*.json .
+
+RUN npm i --only=production
+
+COPY . .
+
+CMD npm run serve

@@ -22,7 +22,7 @@
               <v-col cols="8">
                 <v-text-field
                   v-model="name.firstName"
-                  :counter="12"
+                  :counter="18"
                   :rules="name.rules"
                   label="First name"
                   required
@@ -30,7 +30,7 @@
 
                 <v-text-field
                   v-model="name.lastName"
-                  :counter="12"
+                  :counter="18"
                   :rules="name.rules"
                   label="Last name"
                   required
@@ -144,6 +144,8 @@ const PHONE_REQUIRED = 'Phone number required';
 
 const EMAIN_REGEXP = /.+@.+\..+/;
 
+const MAX_NAME_LENGTH = 18;
+
 const NOT_EMPTY = (errorText) => (v) => !!v || errorText;
 const BASE_CONFIG = {
   value: null,
@@ -170,7 +172,10 @@ export default {
     name: {
       firstName: null,
       lastName: null,
-      rules: [ NOT_EMPTY(ERROR_BASE_TEXT), (v) => (v && v.length <= 12) || NAME_INVALID ],
+      rules: [
+        NOT_EMPTY(ERROR_BASE_TEXT),
+        (v) => (v && v.length <= MAX_NAME_LENGTH) || NAME_INVALID,
+      ],
     },
     notes: {
       value: null,

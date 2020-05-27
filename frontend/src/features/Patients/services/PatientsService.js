@@ -15,7 +15,10 @@ export default {
     return data.map((p) => new Patient(p));
   },
   create: async (payload) => {
-    const { data: { _id } } = await axiosInstance.post(PATIENTS_API_URI, { patient: payload });
+    const { data: { _id } } = await axiosInstance
+      .post(PATIENTS_API_URI, { patient: payload });
+
+    console.log(_id);
 
     return new Patient({ ...payload, _id });
   },
