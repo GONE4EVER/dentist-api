@@ -1,4 +1,4 @@
-import RecordsService from 'features/Records/repositories/Records.repository';
+import RecordsService from 'features/Records/services/Records.service';
 
 import actions from 'features/Records/store/constants/actions';
 import mutations from 'features/Records/store/constants/mutations';

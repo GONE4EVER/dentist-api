@@ -1,19 +1,13 @@
+import BaseProvider from 'common/providers/Base.provider';
+
 import Record from 'common/entities/Record.entity';
 
 
-/**
- * TODO: move common functionality to super class
- */
-export default {
-  getMapped(data) {
-    return Array.isArray(data)
-      ? this.transformArray(data)
-      : this.transformObject(data);
-  },
-  transformArray(data) {
-    return data.map(this.transformObject);
-  },
-  transformObject(data) {
-    return new Record(data);
-  },
-};
+class RecordsProvider extends BaseProvider {
+  constructor() {
+    super(Record);
+  }
+}
+
+
+export default new RecordsProvider();

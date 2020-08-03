@@ -1,8 +1,5 @@
 import axiosInstance from 'utils/axios';
 
-import Record from 'common/entities/Record.entity';
-import Doctor from 'common/entities/Doctor.entity';
-
 import { RECORDS_API_URI } from 'common/constants/api';
 
 
@@ -13,7 +10,7 @@ export default {
   getAll: async () => {
     const { data } = await axiosInstance.get(RECORDS_API_URI);
 
-    return data.map((r) => new Record(r));
+    return data;
   },
   create: async (payload) => {
     const { data } = await axiosInstance
@@ -21,12 +18,7 @@ export default {
 
     if (!data) { return null; }
 
-    const { record, doctor } = data;
-
-    return {
-      doctor: new Doctor(doctor),
-      record: new Record(record),
-    };
+    return data;
   },
   update: async (payload) => {
     const { data } = await axiosInstance
@@ -34,9 +26,9 @@ export default {
 
     const { _id } = data;
 
-    return new Record({
+    return {
       ...data,
       _id,
-    });
+    };
   },
 };
