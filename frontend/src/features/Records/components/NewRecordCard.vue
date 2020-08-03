@@ -137,8 +137,8 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-import DatePicker from 'components/Datepicker.vue';
-import TimePicker from 'components/TimePicker.vue';
+import DatePicker from 'common/components/Datepicker.vue';
+import TimePicker from 'common/components/TimePicker.vue';
 
 import * as doctors from 'features/Doctors/store/constants';
 import * as patients from 'features/Patients/store/constants';

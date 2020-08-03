@@ -43,7 +43,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-import DetailsCard from 'components/DetailsCard.vue';
+import DetailsCard from 'common/components/DetailsCard.vue';
 
 import {
   actions as recordsActions,

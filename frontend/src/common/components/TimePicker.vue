@@ -1,5 +1,5 @@
 <template>
- <v-menu
+  <v-menu
     ref="menu"
     :close-on-content-click="false"
     :value="isOpened"

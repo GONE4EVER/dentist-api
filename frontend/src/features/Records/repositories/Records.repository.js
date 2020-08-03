@@ -1,9 +1,9 @@
 import axiosInstance from 'utils/axios';
 
-import Record from 'entities/Record.entity';
-import Doctor from 'entities/Doctor.entity';
+import Record from 'common/entities/Record.entity';
+import Doctor from 'common/entities/Doctor.entity';
 
-import { RECORDS_API_URI } from 'constants/api';
+import { RECORDS_API_URI } from 'common/constants/api';
 
 
 /**

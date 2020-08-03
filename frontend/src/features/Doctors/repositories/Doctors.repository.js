@@ -1,8 +1,6 @@
 import axiosInstance from 'utils/axios';
 
-import Doctor from 'entities/Doctor.entity';
-
-import { DOCTORS_API_URI } from 'constants/api';
+import { DOCTORS_API_URI } from 'common/constants/api';
 
 
 /**
@@ -14,10 +12,7 @@ export default {
   getAll: async () => {
     const { data } = await axiosInstance.get(DOCTORS_API_URI);
 
-    return data.map(({ availability, ...rest }) => new Doctor({
-      ...rest,
-      availability: availability.map((d) => new Date(d)), // TODO: remove
-    }));
+    return data;
   },
   /* update: async (payload) => {
 

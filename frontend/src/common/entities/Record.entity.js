@@ -1,5 +1,5 @@
-import Doctor from 'entities/Doctor.entity';
-import Patient from 'entities/Patient.entity';
+import Doctor from 'common/entities/Doctor.entity';
+import Patient from 'common/entities/Patient.entity';
 
 import formatters from 'utils/formatters';
 

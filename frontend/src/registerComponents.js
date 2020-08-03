@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
-import BaseDatatable from 'components/BaseDatatable.vue';
-import BaseSnackbar from 'components/BaseSnackbar.vue';
+import BaseDatatable from 'common/components/BaseDatatable.vue';
+import BaseSnackbar from 'common/components/BaseSnackbar.vue';
 
 
 Vue.component('base-datatable', BaseDatatable);

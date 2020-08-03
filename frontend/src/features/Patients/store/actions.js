@@ -1,4 +1,4 @@
-import PatientsProvider from 'features/Patients/services/PatientsService';
+import PatientsProvider from 'features/Patients/repositories/Patients.repository';
 
 import actions from 'features/Patients/store/constants/actions';
 import mutations from 'features/Patients/store/constants/mutations';

@@ -1,4 +1,4 @@
-import Person from 'entities/Person';
+import Person from 'common/entities/Person';
 
 import formatters from 'utils/formatters';
 

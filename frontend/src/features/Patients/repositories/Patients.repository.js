@@ -1,8 +1,8 @@
 import axiosInstance from 'utils/axios';
 
-import Patient from 'entities/Patient.entity';
+import Patient from 'common/entities/Patient.entity';
 
-import { PATIENTS_API_URI } from 'constants/api';
+import { PATIENTS_API_URI } from 'common/constants/api';
 
 
 /**

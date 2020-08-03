@@ -1,4 +1,4 @@
-import Person from 'entities/Person';
+import Person from 'common/entities/Person';
 
 
 export default class Patient extends Person {

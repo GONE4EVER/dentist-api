@@ -1,4 +1,7 @@
-import DoctorsService from 'features/Doctors/services/DoctorsService';
+import pipe from 'utils/pipe';
+
+import DoctorsProvider from 'features/Doctors/providers/Doctors.provider';
+import DoctorsService from 'features/Doctors/repositories/Doctors.repository';
 
 import actions from 'features/Doctors/store/constants/actions';
 import mutations from 'features/Records/store/constants/mutations';
@@ -16,10 +19,19 @@ export const FINISH_FETCH = ({ commit }) => {
 export const GET_DOCTORS = async ({ commit, dispatch }) => {
   try {
     dispatch(actions.START_FETCH);
-    const data = await DoctorsService.getAll();
+
+    const data = await pipe(
+      DoctorsService.getAll,
+      async (res) => {
+        const resData = await res;
+
+        return DoctorsProvider.getMapped(resData);
+      },
+    )();
 
     commit(mutations.SET_ITEMS_LIST, data);
   } catch (err) {
+    console.log(err.name);
     dispatch(actions.HANDLE_ERROR, err);
   } finally {
     dispatch(actions.FINISH_FETCH);

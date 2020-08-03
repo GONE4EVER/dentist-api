@@ -1,5 +1,6 @@
 const production = process.env.NODE_ENV === "production";
 
+
 module.exports = {
   extends: ["airbnb-base"],
   root: true,
