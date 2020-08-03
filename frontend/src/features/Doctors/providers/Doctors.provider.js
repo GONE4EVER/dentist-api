@@ -1,21 +1,22 @@
+import BaseProvider from 'common/providers/Base.provider';
+
 import Doctor from 'common/entities/Doctor.entity';
 
 
-export default {
-  getMapped(data) {
-    return Array.isArray(data)
-      ? this.transformArray(data)
-      : this.transformObject(data);
-  },
-  transformArray(data) {
-    return data.map(this.transformObject);
-  },
-  transformObject(data) {
+class DoctorsProvider extends BaseProvider {
+  constructor() {
+    super(Doctor);
+  }
+
+  transformObject = (data) => {
     const { availability, ...rest } = data;
 
-    return new Doctor({
+    return new this.Entity({
       ...rest,
       availability: availability.map((d) => new Date(d)), // TODO: remove
     });
-  },
-};
+  }
+}
+
+
+export default new DoctorsProvider();

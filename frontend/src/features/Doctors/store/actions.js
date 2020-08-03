@@ -1,7 +1,4 @@
-import pipe from 'utils/pipe';
-
-import DoctorsProvider from 'features/Doctors/providers/Doctors.provider';
-import DoctorsService from 'features/Doctors/repositories/Doctors.repository';
+import DoctorsService from 'features/Doctors/services/Doctors.service';
 
 import actions from 'features/Doctors/store/constants/actions';
 import mutations from 'features/Records/store/constants/mutations';
@@ -20,18 +17,14 @@ export const GET_DOCTORS = async ({ commit, dispatch }) => {
   try {
     dispatch(actions.START_FETCH);
 
-    const data = await pipe(
-      DoctorsService.getAll,
-      async (res) => {
-        const resData = await res;
-
-        return DoctorsProvider.getMapped(resData);
-      },
-    )();
+    const data = await DoctorsService.getAll();
 
     commit(mutations.SET_ITEMS_LIST, data);
   } catch (err) {
-    console.log(err.name);
+    if (err.name !== 'Error') {
+      throw new Error(err);
+    }
+
     dispatch(actions.HANDLE_ERROR, err);
   } finally {
     dispatch(actions.FINISH_FETCH);
@@ -45,6 +38,10 @@ export const EDIT_DOCTOR_PROFILE = async ({ commit, dispatch }, payload) => {
 
     commit(mutations.EDIT_ITEM, data);
   } catch (err) {
+    if (err.name !== 'Error') {
+      throw new Error(err);
+    }
+
     dispatch(actions.HANDLE_ERROR, err);
   } finally {
     dispatch(actions.FINISH_FETCH);
