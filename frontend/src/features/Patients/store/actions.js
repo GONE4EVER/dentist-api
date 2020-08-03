@@ -1,4 +1,4 @@
-import PatientsProvider from 'features/Patients/repositories/Patients.repository';
+import PatientsService from 'features/Patients/services/Patients.service';
 
 import actions from 'features/Patients/store/constants/actions';
 import mutations from 'features/Patients/store/constants/mutations';
@@ -18,7 +18,7 @@ export const FINISH_FETCH = ({ commit }) => {
 export const GET_PATIENTS = async ({ commit, dispatch }) => {
   try {
     dispatch(actions.START_FETCH);
-    const data = await PatientsProvider.getAll();
+    const data = await PatientsService.getAll();
 
     commit(mutations.SET_ITEMS_LIST, data);
     commit(mutations.SET_ERROR_STATE, null);
@@ -32,7 +32,7 @@ export const GET_PATIENTS = async ({ commit, dispatch }) => {
 export const ADD_PATIENT = async ({ commit, dispatch }, payload) => {
   try {
     dispatch(actions.START_FETCH);
-    const data = await PatientsProvider.create(payload);
+    const data = await PatientsService.create(payload);
 
     commit(mutations.ADD_ITEM, data);
   } catch (err) {
@@ -45,7 +45,7 @@ export const ADD_PATIENT = async ({ commit, dispatch }, payload) => {
 export const EDIT_PATIENT_PROFILE = async ({ commit, dispatch }, payload) => {
   try {
     dispatch(actions.START_FETCH);
-    const data = await PatientsProvider.update(payload);
+    const data = await PatientsService.update(payload);
 
     if (!data) {
       throw new Error('Item does not exist');
@@ -60,6 +60,10 @@ export const EDIT_PATIENT_PROFILE = async ({ commit, dispatch }, payload) => {
 };
 
 export const HANDLE_ERROR = (context, errorPayload) => {
+  if (errorPayload.name !== 'Error') {
+    console.error(errorPayload); // TODO: check env
+  }
+
   context.commit(mutations.SET_ERROR_STATE, errorPayload.message);
 };
 
