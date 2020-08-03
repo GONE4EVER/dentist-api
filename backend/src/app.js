@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 
@@ -21,8 +22,11 @@ mongoose.connect(
 const app = express();
 
 // Middlewares
+app.use(cors({
+  origin: 'http://localhost:8080', // TODO: get based on process env
+}));
+
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*'/* 'http://localhost: 8080' */);
   res.header(
     'Access-Control-Allow-Headers',
     'X-Requested-With, Content-Type, Accept, If-Modified-Since, ETag, Authorization',
