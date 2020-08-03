@@ -5,8 +5,10 @@ import homeRoutes from 'pages/Home/routes';
 const routes = [
   homeRoutes,
   loginRoutes,
+
+  // fallback
   {
-    path: '*', // fallback
+    path: '*',
     redirect: '/',
   },
 ];
