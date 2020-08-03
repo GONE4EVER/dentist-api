@@ -21,10 +21,6 @@ export const GET_DOCTORS = async ({ commit, dispatch }) => {
 
     commit(mutations.SET_ITEMS_LIST, data);
   } catch (err) {
-    if (err.name !== 'Error') {
-      throw new Error(err);
-    }
-
     dispatch(actions.HANDLE_ERROR, err);
   } finally {
     dispatch(actions.FINISH_FETCH);
@@ -38,10 +34,6 @@ export const EDIT_DOCTOR_PROFILE = async ({ commit, dispatch }, payload) => {
 
     commit(mutations.EDIT_ITEM, data);
   } catch (err) {
-    if (err.name !== 'Error') {
-      throw new Error(err);
-    }
-
     dispatch(actions.HANDLE_ERROR, err);
   } finally {
     dispatch(actions.FINISH_FETCH);
@@ -49,5 +41,9 @@ export const EDIT_DOCTOR_PROFILE = async ({ commit, dispatch }, payload) => {
 };
 
 export const HANDLE_ERROR = (context, errorPayload) => {
+  if (errorPayload.name !== 'Error') {
+    console.error(errorPayload); // TODO: check env
+  }
+
   context.commit(mutations.SET_ERROR_STATE, errorPayload.message);
 };

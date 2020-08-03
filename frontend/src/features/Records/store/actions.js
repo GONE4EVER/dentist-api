@@ -62,6 +62,10 @@ export const EDIT_RECORD = async ({ commit, dispatch }, payload) => {
 };
 
 export const HANDLE_ERROR = (context, errorPayload) => {
+  if (errorPayload.name !== 'Error') {
+    console.error(errorPayload); // TODO: check env
+  }
+
   context.commit(mutations.SET_ERROR_STATE, errorPayload.message);
 };
 
