@@ -5,8 +5,8 @@ import getters from 'features/Doctors/store/constants/getters';
 import mutations from 'features/Doctors/store/constants/mutations';
 
 
-const PATIENTS_MODULE_PREFIX = 'doctors';
-const getNamespacedItems = setNamespace(PATIENTS_MODULE_PREFIX);
+const DOCTORS_MODULE_PREFIX = 'doctors';
+const getNamespacedItems = setNamespace(DOCTORS_MODULE_PREFIX);
 
 const namespacedActions = getNamespacedItems(actions);
 const namespacedGetters = getNamespacedItems(getters);
