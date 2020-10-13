@@ -1,5 +1,15 @@
 const production = process.env.NODE_ENV === 'production';
 
+const allowedToReassignParams = [
+  'acc', // reduce accumulators
+  'req', // Express requests
+  'request', // Express requests
+  'res', // Express responses
+  'response', // Express responses
+  'state', // Vuex mutations
+];
+
+
 module.exports = {
   root: true,
   env: {
@@ -7,10 +17,14 @@ module.exports = {
     browser: true,
     es2020: true,
   },
-  extends: [ 'plugin:vue/essential', '@vue/airbnb' ],
+  extends: [
+    'plugin:vue/essential',
+    'plugin:vue/recommended',
+    '@vue/airbnb'
+  ],
   parserOptions: {
     parser: 'babel-eslint',
-    ecmaVersion: 6,
+    ecmaVersion: 8,
     sourceType: 'module',
   },
   rules: {
@@ -18,14 +32,18 @@ module.exports = {
       'error',
       'always',
     ],
+    'arrow-parens': [
+      'error',
+      'as-needed'
+    ],
     'comma-dangle': [
       'error',
       {
-        arrays: 'always-multiline',
-        objects: 'always-multiline',
-        imports: 'always-multiline',
-        exports: 'always-multiline',
-        functions: 'always-multiline',
+        'arrays': 'always-multiline',
+        'objects': 'always-multiline',
+        'imports': 'always-multiline',
+        'exports': 'always-multiline',
+        'functions': 'always-multiline',
       },
     ],
     'eol-last': [
@@ -37,13 +55,52 @@ module.exports = {
       'always',
       {
         // vue: 'never',
-        js: 'never',
+        'js': 'never',
       },
+    ],
+    'import/newline-after-import': [
+      2, 
+      { 'count': 2 }
+    ],
+    'import/order': [
+      'error', 
+        {
+        'alphabetize': {
+          'order': 'asc',
+        },
+        'newlines-between': 'always',
+        'pathGroups': [
+          {
+            'pattern': '~/**',
+            'group': 'internal',
+            'position': 'before'
+          },
+          {
+            'pattern': './**',
+            'group': 'internal',
+            'position': 'after'
+          }
+        ],
+        'pathGroupsExcludedImportTypes': [
+          'builtin',
+          'external'
+        ]
+      }
+    ],
+    'indent': [ 
+      'error',
+      2,
+      { 'SwitchCase': 1 }
     ],
     'linebreak-style': [
       'error',
       'unix',
     ],
+    'newline-after-var': [
+      'error',
+      'always'
+    ],
+    'newline-before-return': [ 'error' ],
     'no-console': production
       ? 'warn'
       : 'off',
@@ -53,6 +110,13 @@ module.exports = {
     'no-multiple-empty-lines': [
       'error',
       { max: 2 },
+    ],
+    'no-param-reassign': [
+      'error', 
+      {
+        'props': true,
+        'ignorePropertyModificationsFor': allowedToReassignParams
+      }
     ],
   },
   settings: {
