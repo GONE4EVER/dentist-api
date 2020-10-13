@@ -143,6 +143,7 @@ const PHONE_INVALID = 'Invalid Number';
 const PHONE_REQUIRED = 'Phone number required';
 
 const EMAIN_REGEXP = /.+@.+\..+/;
+const PHONE_REGEXP = /^(([0-9]){9})$/;
 
 const MAX_NAME_LENGTH = 18;
 
@@ -151,6 +152,7 @@ const BASE_CONFIG = {
   value: null,
   rules: [ NOT_EMPTY(ERROR_BASE_TEXT) ],
 };
+
 
 export default {
   props: {
@@ -195,7 +197,7 @@ export default {
       rules: [
         NOT_EMPTY(PHONE_REQUIRED),
         (v) => v !== PHONE_PREFIX,
-        (v) => /^(([0-9]){9})$/.test(v) || PHONE_INVALID,
+        (v) => PHONE_REGEXP.test(v) || PHONE_INVALID,
       ],
     },
     valid: true,
@@ -239,7 +241,7 @@ export default {
       };
     },
     checkIfEmpty() {
-      return Object.values(this.getFormData()).every((v) => !v);
+      return !Object.values(this.getFormData()).every(Boolean);
     },
     cancel() {
       const isEmpty = this.checkIfEmpty();
