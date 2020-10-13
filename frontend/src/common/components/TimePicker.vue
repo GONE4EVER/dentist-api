@@ -3,37 +3,45 @@
     ref="menu"
     :close-on-content-click="false"
     :value="isOpened"
-    @input="$emit('update:isOpened', $event)"
     min-width="290px"
     offset-y
     transition="slide-y-reverse-transition"
+    @input="$emit('update:isOpened', $event)"
   >
     <template v-slot:activator="{ on }">
       <v-text-field
-        v-on="on"
         :disabled="disabled"
         :label="label"
         :value="inputModel || time"
         prepend-icon="mdi-calendar"
         readonly
+        v-on="on"
       />
     </template>
 
     <v-time-picker
       :allowed-hours="allowedHours"
       :allowed-minutes="checkMinutes"
-      @change="onTimeChange"
-      @click:hour="trackSelectedHour"
       :value="time"
       format="24hr"
+      @change="onTimeChange"
+      @click:hour="trackSelectedHour"
     >
       <v-spacer />
 
-      <v-btn text color="primary" @click="$emit('update:isOpened', false)">
+      <v-btn
+        text
+        color="primary"
+        @click="$emit('update:isOpened', false)"
+      >
         Cancel
       </v-btn>
 
-      <v-btn text color="primary" @click="$refs.menu.save(time)">
+      <v-btn
+        text
+        color="primary"
+        @click="$refs.menu.save(time)"
+      >
         OK
       </v-btn>
     </v-time-picker>
@@ -48,9 +56,6 @@
 
 export default {
   inheritAttrs: false,
-  data: () => ({
-    hourSelected: null,
-  }),
   props: {
     allowedItems: {
       type: Array,
@@ -87,6 +92,9 @@ export default {
       default: null,
     },
   },
+  data: () => ({
+    hourSelected: null,
+  }),
   methods: {
     trackSelectedHour(value) {
       this.hourSelected = value;
@@ -104,6 +112,7 @@ export default {
       if (!allowedHours || !allowedItems) {
         return allowedMinutes(value);
       }
+
       return allowedItems
         .some(({ time }) => {
           const isHourEqual = Number(time.split(':')[0]) === this.hourSelected;

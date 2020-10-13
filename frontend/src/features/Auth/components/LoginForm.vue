@@ -21,26 +21,28 @@
             name="login"
             prepend-icon="mdi-account"
             type="text"
-          ></v-text-field>
+          />
 
           <v-text-field
+            id="password"
             v-model="passwordModel"
             :error-messages="authError"
-            id="password"
             label="Password"
             name="password"
             prepend-icon="mdi-lock"
             type="password"
-          ></v-text-field>
+          />
         </v-form>
       </v-card-text>
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-btn
-          @click="handleLogin"
           class="col-3"
           color="primary"
-        >Login</v-btn>
+          @click="handleLogin"
+        >
+          Login
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-col>

@@ -1,15 +1,15 @@
-import pipe from 'utils/pipe';
 
 import DoctorsProvider from 'features/Doctors/providers/Doctors.provider';
 import RecordsProvider from 'features/Records/providers/Records.provider';
 import RecordsRepository from 'features/Records/repositories/Records.repository';
+import pipe from 'utils/pipe';
 
 
 export default {
   async getAll() {
     const data = await pipe(
       RecordsRepository.getAll,
-      async (res) => {
+      async res => {
         const resData = await res;
 
         return RecordsProvider.getMapped(resData);
@@ -18,10 +18,10 @@ export default {
 
     return data;
   },
-  create: async (payload) => {
+  create: async payload => {
     const data = await pipe(
       RecordsRepository.create,
-      async (res) => {
+      async res => {
         const { doctor, record } = await res;
 
         return {
@@ -33,10 +33,10 @@ export default {
 
     return data;
   },
-  update: async (payload) => {
+  update: async payload => {
     const data = await pipe(
       RecordsRepository.update,
-      async (res) => {
+      async res => {
         const resData = await res;
 
         return RecordsProvider.getMapped(resData);

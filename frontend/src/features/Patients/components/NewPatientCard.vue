@@ -1,21 +1,46 @@
 <template>
-  <v-dialog :value="isOpened" persistent width="800px">
+  <v-dialog
+    :value="isOpened"
+    persistent
+    width="800px"
+  >
     <v-card>
-      <v-overlay :value="fetching" absolute opacity="0.8">
-        <v-progress-circular indeterminate rotate size="64" width="5" color="light-blue" />
+      <v-overlay
+        :value="fetching"
+        absolute
+        opacity="0.8"
+      >
+        <v-progress-circular
+          indeterminate
+          rotate
+          size="64"
+          width="5"
+          color="light-blue"
+        />
       </v-overlay>
 
-      <v-card-title class="blue darken-2 white--text">Add new patient card</v-card-title>
+      <v-card-title class="blue darken-2 white--text">
+        Add new patient card
+      </v-card-title>
       <v-container>
         <v-card-text>
-          <v-form ref="form" v-model="valid">
-            <v-row align="center" class="mr-0">
+          <v-form
+            ref="form"
+            v-model="valid"
+          >
+            <v-row
+              align="center"
+              class="mr-0"
+            >
               <v-col cols="4">
-                <v-avatar size="100px" class="mx-12">
+                <v-avatar
+                  size="100px"
+                  class="mx-12"
+                >
                   <img
                     src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png"
                     alt="profile pic"
-                  />
+                  >
                 </v-avatar>
               </v-col>
 
@@ -26,7 +51,7 @@
                   :rules="name.rules"
                   label="First name"
                   required
-                ></v-text-field>
+                />
 
                 <v-text-field
                   v-model="name.lastName"
@@ -34,7 +59,7 @@
                   :rules="name.rules"
                   label="Last name"
                   required
-                ></v-text-field>
+                />
               </v-col>
             </v-row>
 
@@ -43,7 +68,7 @@
               :rules="address.rules"
               label="Address"
               required
-            ></v-text-field>
+            />
 
             <v-row>
               <v-col cols="6">
@@ -53,7 +78,7 @@
                   label="Email"
                   prepend-icon="mdi-card-account-mail-outline"
                   required
-                ></v-text-field>
+                />
               </v-col>
 
               <v-col cols="6">
@@ -65,7 +90,7 @@
                   prepend-icon="mdi-phone"
                   required
                   type="tel"
-                ></v-text-field>
+                />
               </v-col>
             </v-row>
 
@@ -76,7 +101,7 @@
                   :rules="job.rules"
                   label="Job"
                   required
-                ></v-text-field>
+                />
               </v-col>
 
               <v-col cols="6">
@@ -85,7 +110,7 @@
                   :rules="company.rules"
                   label="Company"
                   required
-                ></v-text-field>
+                />
               </v-col>
             </v-row>
 
@@ -102,22 +127,40 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn @click="cancel" color="error" text>Cancel</v-btn>
+          <v-btn
+            color="error"
+            text
+            @click="cancel"
+          >
+            Cancel
+          </v-btn>
           <v-spacer />
 
-          <v-btn color="primary" class="mr-4" @click="reset">Reset</v-btn>
+          <v-btn
+            color="primary"
+            class="mr-4"
+            @click="reset"
+          >
+            Reset
+          </v-btn>
 
-          <v-btn @click="submit" :disabled="!valid" color="success">Submit</v-btn>
+          <v-btn
+            :disabled="!valid"
+            color="success"
+            @click="submit"
+          >
+            Submit
+          </v-btn>
         </v-card-actions>
       </v-container>
     </v-card>
 
     <base-snackbar
-      @beforeClose="close"
       :visible="Boolean(error)"
       :text="error || 'null'"
-      buttonText="Close anyway"
+      button-text="Close anyway"
       color="error"
+      @beforeClose="close"
     />
   </v-dialog>
 </template>
@@ -147,7 +190,7 @@ const PHONE_REGEXP = /^(([0-9]){9})$/;
 
 const MAX_NAME_LENGTH = 18;
 
-const NOT_EMPTY = (errorText) => (v) => !!v || errorText;
+const NOT_EMPTY = errorText => v => !!v || errorText;
 const BASE_CONFIG = {
   value: null,
   rules: [ NOT_EMPTY(ERROR_BASE_TEXT) ],
@@ -166,7 +209,7 @@ export default {
     company: { ...BASE_CONFIG },
     email: {
       value: null,
-      rules: [ NOT_EMPTY(ERROR_BASE_TEXT), (v) => EMAIN_REGEXP.test(v) || EMAIL_INVALID ],
+      rules: [ NOT_EMPTY(ERROR_BASE_TEXT), v => EMAIN_REGEXP.test(v) || EMAIL_INVALID ],
     },
     error: '',
     errorTimeout: 3000,
@@ -176,13 +219,13 @@ export default {
       lastName: null,
       rules: [
         NOT_EMPTY(ERROR_BASE_TEXT),
-        (v) => (v && v.length <= MAX_NAME_LENGTH) || NAME_INVALID,
+        v => (v && v.length <= MAX_NAME_LENGTH) || NAME_INVALID,
       ],
     },
     notes: {
       value: null,
       rules: [
-        (v) => {
+        v => {
           if (!v) {
             return true;
           }
@@ -196,8 +239,8 @@ export default {
       value: null,
       rules: [
         NOT_EMPTY(PHONE_REQUIRED),
-        (v) => v !== PHONE_PREFIX,
-        (v) => PHONE_REGEXP.test(v) || PHONE_INVALID,
+        v => v !== PHONE_PREFIX,
+        v => PHONE_REGEXP.test(v) || PHONE_INVALID,
       ],
     },
     valid: true,

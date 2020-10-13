@@ -21,7 +21,7 @@ const time = new Intl.DateTimeFormat(LOCALE, {
   hour12: false,
 });
 
-const isoFormat = (formatter) => (date) => formatter.format(date)
+const isoFormat = formatter => date => formatter.format(date)
   .split('/')
   .reverse()
   .join('-');

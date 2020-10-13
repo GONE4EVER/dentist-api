@@ -3,11 +3,11 @@ export default class BaseProvider {
     this.Entity = Entity;
   }
 
-  getMapped = (data) => (Array.isArray(data)
+  getMapped = data => (Array.isArray(data)
     ? this.transformArray(data)
     : this.transformObject(data))
 
-  transformArray = (data) => data.map(this.transformObject)
+  transformArray = data => data.map(this.transformObject)
 
-  transformObject = (data) => new this.Entity(data)
+  transformObject = data => new this.Entity(data)
 }

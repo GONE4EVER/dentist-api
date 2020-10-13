@@ -1,6 +1,5 @@
-import BaseProvider from 'common/providers/Base.provider';
-
 import Doctor from 'common/entities/Doctor.entity';
+import BaseProvider from 'common/providers/Base.provider';
 
 
 class DoctorsProvider extends BaseProvider {
@@ -8,12 +7,12 @@ class DoctorsProvider extends BaseProvider {
     super(Doctor);
   }
 
-  transformObject = (data) => {
+  transformObject = data => {
     const { availability, ...rest } = data;
 
     return new this.Entity({
       ...rest,
-      availability: availability.map((d) => new Date(d)), // TODO: remove
+      availability: availability.map(d => new Date(d)), // TODO: remove
     });
   }
 }

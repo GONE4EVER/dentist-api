@@ -7,10 +7,10 @@
     <v-list flat>
       <v-list-item
         v-for="item in items"
-        @click="navigateTo(item)"
         :key="item.text"
         class="nav-bar__item"
         link
+        @click="navigateTo(item)"
       >
         <v-list-item-action>
           <v-icon>{{ item.icon }}</v-icon>
@@ -27,7 +27,6 @@
 import { mapActions } from 'vuex';
 
 import { actions as authActions } from 'features/Auth/store/constants';
-
 import {
   PATIENTS_LIST_NAME,
   ROOT_NAME,

@@ -1,5 +1,4 @@
 import Person from 'common/entities/Person';
-
 import formatters from 'utils/formatters';
 
 
@@ -13,7 +12,7 @@ export default class Doctor extends Person {
     super(rest);
 
     this.availability = availability.map(
-      (baseDate) => {
+      baseDate => {
         const date = new Date(baseDate);
 
         return {

@@ -1,6 +1,10 @@
 <template>
   <v-card>
-    <v-overlay :value="fetching" absolute opacity="0.8">
+    <v-overlay
+      :value="fetching"
+      absolute
+      opacity="0.8"
+    >
       <v-progress-circular
         indeterminate
         rotate
@@ -24,7 +28,10 @@
         :placeholder="editAreaPlaceholder"
         autofocus
       >
-        <template v-if="Boolean(errorMessage)" #message={message}>
+        <template
+          v-if="Boolean(errorMessage)"
+          #message="{message}"
+        >
           {{ message }}
         </template>
       </v-textarea>
@@ -33,20 +40,28 @@
     <v-card-actions>
       <v-btn
         v-if="Boolean(editMode)"
-        @click="close(true)"
         color="red"
         text
+        @click="close(true)"
       >
         Cancel
       </v-btn>
 
       <v-spacer />
 
-      <v-btn color="green darken-1" text @click="switchEditMode">
-        {{editMode ? 'Submit' : 'Edit'}}
+      <v-btn
+        color="green darken-1"
+        text
+        @click="switchEditMode"
+      >
+        {{ editMode ? 'Submit' : 'Edit' }}
       </v-btn>
 
-      <v-btn color="green darken-1" text @click="close(false)">
+      <v-btn
+        color="green darken-1"
+        text
+        @click="close(false)"
+      >
         Close
       </v-btn>
     </v-card-actions>
@@ -111,6 +126,7 @@ export default {
     close(force) {
       if (!force && this.newNoteContent !== this.notes) {
         this.errorMessage = ERROR_MESSAGE;
+
         return;
       }
 

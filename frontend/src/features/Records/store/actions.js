@@ -1,8 +1,7 @@
+import { mutations as doctorsMutations } from 'features/Doctors/store/constants';
 import RecordsService from 'features/Records/services/Records.service';
-
 import actions from 'features/Records/store/constants/actions';
 import mutations from 'features/Records/store/constants/mutations';
-import { mutations as doctorsMutations } from 'features/Doctors/store/constants';
 
 
 /**

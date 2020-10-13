@@ -1,5 +1,5 @@
-import loginRoutes from 'pages/Login/routes';
 import homeRoutes from 'pages/Home/routes';
+import loginRoutes from 'pages/Login/routes';
 
 
 const routes = [

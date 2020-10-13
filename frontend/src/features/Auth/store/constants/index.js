@@ -1,8 +1,8 @@
-import setNamespace from 'utils/getNamespacedNames';
 
 import actions from 'features/Auth/store/constants/actions';
 import getters from 'features/Auth/store/constants/getters';
 import mutations from 'features/Auth/store/constants/mutations';
+import setNamespace from 'utils/getNamespacedNames';
 
 
 const AUTH_MODULE_PREFIX = 'auth';

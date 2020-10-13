@@ -1,47 +1,47 @@
 <template>
- <v-menu
+  <v-menu
     ref="menu"
     :close-on-content-click="false"
-    @input="$emit('update:isOpened', $event)"
     :value="isOpened"
     min-width="290px"
     offset-y
     transition="slide-y-reverse-transition"
+    @input="$emit('update:isOpened', $event)"
   >
     <template v-slot:activator="{ on }">
       <v-text-field
-        v-on="on"
         :disabled="disabled"
         :label="label"
         :value="inputModel || date"
         prepend-icon="mdi-calendar"
         readonly
+        v-on="on"
       />
     </template>
 
     <v-date-picker
       :allowed-dates="allowedDates"
-      @change="onDateChange"
       :first-day-of-week="1"
       :min="minDate"
       :value="date"
       scrollable
       show-current
+      @change="onDateChange"
     >
       <v-spacer />
 
       <v-btn
-        @click="$emit('update:isOpened', false)"
         color="primary"
         text
+        @click="$emit('update:isOpened', false)"
       >
         Cancel
       </v-btn>
 
       <v-btn
-        @click="$refs.menu.save(date);"
         color="primary"
         text
+        @click="$refs.menu.save(date);"
       >
         OK
       </v-btn>

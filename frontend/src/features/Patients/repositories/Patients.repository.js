@@ -1,6 +1,5 @@
-import axiosInstance from 'utils/axios';
-
 import { PATIENTS_API_URI } from 'common/constants/api';
+import axiosInstance from 'utils/axios';
 
 
 /**
@@ -12,13 +11,13 @@ export default {
 
     return data;
   },
-  create: async (payload) => {
+  create: async payload => {
     const { data: { _id } } = await axiosInstance
       .post(PATIENTS_API_URI, { patient: payload });
 
     return { ...payload, _id };
   },
-  update: async (payload) => {
+  update: async payload => {
     const { data } = await axiosInstance
       .patch(PATIENTS_API_URI, { patient: payload });
 

@@ -7,7 +7,7 @@
  */
 
 const pipe = (...funcs) => funcs
-  .filter((func) => func instanceof Function)
+  .filter(func => func instanceof Function)
   .reduce(
     (prev, next) => (...args) => next(prev(...args)),
   );

@@ -1,6 +1,5 @@
-import axiosInstance from 'utils/axios';
-
 import { DOCTORS_API_URI } from 'common/constants/api';
+import axiosInstance from 'utils/axios';
 
 
 /**

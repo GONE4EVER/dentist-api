@@ -1,5 +1,4 @@
 import PatientsService from 'features/Patients/services/Patients.service';
-
 import actions from 'features/Patients/store/constants/actions';
 import mutations from 'features/Patients/store/constants/mutations';
 

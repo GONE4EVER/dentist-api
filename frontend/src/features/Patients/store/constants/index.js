@@ -1,8 +1,8 @@
-import setNamespace from 'utils/getNamespacedNames';
 
 import actions from 'features/Patients/store/constants/actions';
 import getters from 'features/Patients/store/constants/getters';
 import mutations from 'features/Patients/store/constants/mutations';
+import setNamespace from 'utils/getNamespacedNames';
 
 
 const PATIENTS_MODULE_PREFIX = 'patients';

@@ -5,7 +5,11 @@
     width="500px"
   >
     <v-card>
-      <v-overlay :value="recordsFetching" absolute opacity="0.8">
+      <v-overlay
+        :value="recordsFetching"
+        absolute
+        opacity="0.8"
+      >
         <v-progress-circular
           color="light-blue"
           indeterminate
@@ -42,8 +46,6 @@
 
                 <v-combobox
                   v-model="doctor.value"
-                  @change="onDoctorChange"
-                  @click:clear="onDoctorChange"
                   :items="doctorItems"
                   :loading="doctorsFetching"
                   :rules="doctor.rules"
@@ -51,6 +53,8 @@
                   hide-no-data
                   label="Doctor"
                   required
+                  @change="onDoctorChange"
+                  @click:clear="onDoctorChange"
                 />
               </v-col>
             </v-row>
@@ -58,11 +62,11 @@
             <v-row>
               <v-col cols="6">
                 <date-picker
-                  :allowedDates="allowedDates"
+                  :allowed-dates="allowedDates"
                   :date.sync="pickedDate"
                   :disabled="!Boolean(doctor.value)"
-                  :inputModel="formattedDate"
-                  :isOpened.sync="datePicker"
+                  :input-model="formattedDate"
+                  :is-opened.sync="datePicker"
                   icon="mdi-calendar"
                   label="Preferable date"
                 />
@@ -70,11 +74,11 @@
 
               <v-col cols="6">
                 <time-picker
-                  :allowedItems="doctor.availability"
-                  :allowedHours="allowedHours"
-                  :allowedMinutes="allowedMinutes"
+                  :allowed-items="doctor.availability"
+                  :allowed-hours="allowedHours"
+                  :allowed-minutes="allowedMinutes"
                   :disabled="!Boolean(pickedDate)"
-                  :isOpened.sync="timePicker"
+                  :is-opened.sync="timePicker"
                   :time.sync="pickedTime"
                   label="Preferable time"
                 />
@@ -95,9 +99,9 @@
 
         <v-card-actions>
           <v-btn
-            @click="cancel"
             color="error"
             text
+            @click="cancel"
           >
             Cancel
           </v-btn>
@@ -113,9 +117,9 @@
           </v-btn>
 
           <v-btn
-            @click="submit"
             :disabled="!isFormValid"
             color="success"
+            @click="submit"
           >
             Submit
           </v-btn>
@@ -124,12 +128,12 @@
     </v-card>
 
     <base-snackbar
-      @beforeClose="close"
       :visible="Boolean(error)"
       :text="error || 'null'"
       :timeout="errorTimeout"
-      buttonText="Close anyway"
+      button-text="Close anyway"
       color="error"
+      @beforeClose="close"
     />
   </v-dialog>
 </template>
@@ -139,11 +143,9 @@ import { mapActions, mapGetters } from 'vuex';
 
 import DatePicker from 'common/components/Datepicker.vue';
 import TimePicker from 'common/components/TimePicker.vue';
-
 import * as doctors from 'features/Doctors/store/constants';
 import * as patients from 'features/Patients/store/constants';
 import * as records from 'features/Records/store/constants';
-
 import formatters from 'utils/formatters';
 
 
@@ -154,7 +156,7 @@ const FORM_IS_NOT_EMPTY_ERROR = 'Form is not empty';
 
 const NOTES_INVALID = 'Too many symbols';
 
-const NOT_EMPTY = (errorText) => (v) => !!v || errorText;
+const NOT_EMPTY = errorText => v => !!v || errorText;
 
 
 export default {
@@ -175,7 +177,7 @@ export default {
         value: null,
         rules: [
           NOT_EMPTY(ERROR_BASE_TEXT),
-          (v) => this.doctorItems.some(
+          v => this.doctorItems.some(
             ({ text }) => text.includes(v?.text),
           ) || DOCTOR_MISSING_ERROR,
         ],
@@ -188,14 +190,14 @@ export default {
       notes: {
         value: null,
         rules: [
-          (v) => !v || v.length <= 256 || NOTES_INVALID,
+          v => !v || v.length <= 256 || NOTES_INVALID,
         ],
       },
       patient: {
         value: null,
         rules: [
           NOT_EMPTY(ERROR_BASE_TEXT),
-          (v) => this.patientItems.some(
+          v => this.patientItems.some(
             ({ text }) => text.includes(v?.text),
           ) || PATIENT_MISSING_ERROR,
         ],
@@ -287,7 +289,7 @@ export default {
     checkIfEmpty() {
       const isEmpty = Object
         .values(this.getFormData())
-        .every((v) => !v);
+        .every(v => !v);
 
       return isEmpty;
     },

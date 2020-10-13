@@ -2,18 +2,21 @@
   <v-card>
     <records-table />
     <v-btn
-      @click="dialogOpened = !dialogOpened"
       bottom
       color="indigo"
       dark
       fab
       fixed
       right
+      @click="dialogOpened = !dialogOpened"
     >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
 
-    <new-record-card v-if="dialogOpened" :isOpened.sync="dialogOpened"/>
+    <new-record-card
+      v-if="dialogOpened"
+      :is-opened.sync="dialogOpened"
+    />
 
     <base-snackbar
       :visible="Boolean(doctorsError || patientsError || recordsError)"
@@ -26,11 +29,10 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-import NewRecordCard from 'features/Records/components/NewRecordCard.vue';
-import RecordsTable from 'features/Records/components/RecordsTable.vue';
-
 import { getters as doctorGetters } from 'features/Doctors/store/constants';
 import { getters as patientsGetters } from 'features/Patients/store/constants';
+import NewRecordCard from 'features/Records/components/NewRecordCard.vue';
+import RecordsTable from 'features/Records/components/RecordsTable.vue';
 import {
   actions as recordsActions,
   getters as recordsGetters,

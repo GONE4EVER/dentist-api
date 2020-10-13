@@ -22,7 +22,7 @@ export const EDIT_ITEM = (state, payload) => {
   const { id } = payload;
 
   state.list = state.list
-    .map((item) => (item.id === id ? payload : item));
+    .map(item => (item.id === id ? payload : item));
 };
 
 export const REMOVE_ITEM = (state, payload) => {

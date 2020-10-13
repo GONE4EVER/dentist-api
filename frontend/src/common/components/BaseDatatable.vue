@@ -10,7 +10,10 @@
         v-if="Boolean(editableProp)"
         #[slotName]="{item}"
       >
-        <slot :name="editableProp" :item="item">
+        <slot
+          :name="editableProp"
+          :item="item"
+        >
           {{ item[editableProp] }}
         </slot>
       </template>

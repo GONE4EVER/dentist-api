@@ -1,5 +1,4 @@
 import Login from 'pages/Login/Login.vue';
-
 import { LOGIN_ROUTE_NAME, LOGIN_ROUTE_PATH } from 'pages/Login/routes/constants';
 
 

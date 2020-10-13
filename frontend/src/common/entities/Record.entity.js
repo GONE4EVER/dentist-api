@@ -1,11 +1,8 @@
 import Doctor from 'common/entities/Doctor.entity';
 import Patient from 'common/entities/Patient.entity';
-
 import formatters from 'utils/formatters';
 
-/**
- * TODO: remove id
-*/
+
 export default class Record {
   constructor(props) {
     const {
@@ -19,6 +16,7 @@ export default class Record {
     this.id = _id;
 
     const date = new Date(baseDate);
+
     this.date = formatters.shortDate.format(date);
     this.time = formatters.time.format(date);
 
@@ -27,7 +25,10 @@ export default class Record {
     this.notes = notes || '';
 
     const patientsProfile = new Patient(patient);
+
     this.patient = patientsProfile.fullName;
     this.phoneNumber = patientsProfile.phoneNumber;
   }
 }
+
+

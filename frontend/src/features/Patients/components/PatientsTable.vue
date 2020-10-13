@@ -1,30 +1,43 @@
 <template>
   <v-card>
-    <v-dialog persistent v-model="dialogOpened" max-width="600">
+    <v-dialog
+      v-model="dialogOpened"
+      persistent
+      max-width="600"
+    >
       <template #activator="{ on }">
         <v-card-title>
           {{ title }}
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-text-field
             v-model="search"
             append-icon="mdi-magnify"
             clearable
             label="Search"
             outlined
-          ></v-text-field>
+          />
         </v-card-title>
 
         <base-datatable
           searchable
-          :dataSource="filteredList"
+          :data-source="filteredList"
           :headers="headers"
           :loading="fetching"
           :search.sync="search"
-          :editableProp="editableProp"
+          :editable-prop="editableProp"
         >
-          <template v-if="editableProp" #[editableProp]={item}>
-            <v-btn icon v-on="on" @click="setSelectedItem(item)">
-              <v-icon color="pink">mdi-note-text</v-icon>
+          <template
+            v-if="editableProp"
+            #[editableProp]="{item}"
+          >
+            <v-btn
+              icon
+              v-on="on"
+              @click="setSelectedItem(item)"
+            >
+              <v-icon color="pink">
+                mdi-note-text
+              </v-icon>
             </v-btn>
           </template>
         </base-datatable>
@@ -32,7 +45,7 @@
 
       <details-card
         v-bind="selectedPatient"
-        :isOpened.sync="dialogOpened"
+        :is-opened.sync="dialogOpened"
         :fetching="fetching"
         @updateContent="handleNotesUpdate"
       />
@@ -44,7 +57,6 @@
 import { mapActions, mapGetters } from 'vuex';
 
 import DetailsCard from 'common/components/DetailsCard.vue';
-
 import {
   actions as patientsActions,
   getters as patientsGetters,

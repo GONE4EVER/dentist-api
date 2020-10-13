@@ -1,6 +1,5 @@
-import axiosInstance from 'utils/axios';
-
 import { RECORDS_API_URI } from 'common/constants/api';
+import axiosInstance from 'utils/axios';
 
 
 /**
@@ -12,7 +11,7 @@ export default {
 
     return data;
   },
-  create: async (payload) => {
+  create: async payload => {
     const { data } = await axiosInstance
       .post(RECORDS_API_URI, { record: payload });
 
@@ -20,7 +19,7 @@ export default {
 
     return data;
   },
-  update: async (payload) => {
+  update: async payload => {
     const { data } = await axiosInstance
       .patch(RECORDS_API_URI, { record: payload });
 

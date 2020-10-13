@@ -10,11 +10,11 @@
   >
     {{ text }}
     <v-btn
-      v-bind="$attrs"
       v-if="buttonText"
-      @click="close"
+      v-bind="$attrs"
       dark
       text
+      @click="close"
     >
       {{ buttonText }}
     </v-btn>

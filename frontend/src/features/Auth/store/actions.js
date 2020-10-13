@@ -1,5 +1,4 @@
 import AuthService from 'features/Auth/services/AuthService';
-
 import actions from 'features/Auth/store/constants/actions';
 import mutations from 'features/Auth/store/constants/mutations';
 

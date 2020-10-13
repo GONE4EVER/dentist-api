@@ -2,18 +2,18 @@
   <v-card>
     <patients-table />
     <v-btn
-      @click="dialogOpened = !dialogOpened"
       bottom
       color="pink"
       dark
       fab
       fixed
       right
+      @click="dialogOpened = !dialogOpened"
     >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
 
-    <new-patient-card :isOpened.sync="dialogOpened"/>
+    <new-patient-card :is-opened.sync="dialogOpened" />
 
     <base-snackbar
       :visible="Boolean(errorState)"
@@ -28,7 +28,6 @@ import { mapActions, mapGetters } from 'vuex';
 
 import NewPatientCard from 'features/Patients/components/NewPatientCard.vue';
 import PatientsTable from 'features/Patients/components/PatientsTable.vue';
-
 import {
   actions as patientsActions,
   getters as patientsGetters,

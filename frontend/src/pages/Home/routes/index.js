@@ -1,6 +1,5 @@
 import Home from 'pages/Home/Home.vue';
 import Patients from 'pages/Home/Patients.vue';
-
 import * as constants from 'pages/Home/routes/constants';
 
 
