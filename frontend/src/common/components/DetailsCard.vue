@@ -11,11 +11,12 @@
     </v-overlay>
 
     <v-card-title class="headline">
-      {{ title ? `${title} details` : 'Details' }}
+      {{ headerText }}
     </v-card-title>
 
     <v-card-text>
       {{ (!editMode || null) && (notes || cardTextPlaceholder) }}
+
       <v-textarea
         v-if="editMode"
         v-model="newNoteContent"
@@ -24,7 +25,7 @@
         autofocus
       >
         <template v-if="Boolean(errorMessage)" #message={message}>
-          {{ `${message}` }}
+          {{ message }}
         </template>
       </v-textarea>
     </v-card-text>
@@ -121,6 +122,11 @@ export default {
     ...mapGetters({
       errorState: patientsGetters.GET_ERROR_STATE,
     }),
+    headerText() {
+      const { title } = this;
+
+      return title ? `${title} details` : 'Details';
+    },
   },
   watch: {
     isOpened: {
